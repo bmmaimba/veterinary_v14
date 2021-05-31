@@ -1,0 +1,25 @@
+<odoo>
+    <data>
+
+          <record id="object0" model="appointment.stages">
+            <field name="name">New</field>
+          </record>
+
+          <record id="object1" model="appointment.stages">
+            <field name="name">Doctors Review</field>
+          </record>
+
+          <record id="object2" model="appointment.stages">
+            <field name="name">Clinic</field>
+          </record>
+
+          <record id="object3" model="appointment.stages">
+            <field name="name">Dispensary</field>
+          </record>
+
+          <record id="object4" model="appointment.stages">
+            <field name="name">Discharged</field>
+          </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- https://www.odoo.com/documentation/14.0/howtos/backend.html -->
+<odoo>
+    <data>
+        <record id="appointment_tree_view" model="ir.ui.view">
+            <field name="name">calendar.event.tree</field>
+            <field name="model">calendar.event</field>
+            <field name="inherit_id" ref="calendar.view_calendar_event_tree"/>
+            <field name="arch" type="xml">
+			
+			    <xpath expr="//tree" position="attributes">
+                    <attribute name="editable">top</attribute>
+	            </xpath>
+
+                <xpath expr="//field[@name='name']" position="replace">
+                    <!--<field name="name" readonly="1" required="0" string="Name"/>-->
+                    <field name="start_date" required="1"/>
+                    <field name="start_time" required="1"/>
+                    <field name="pet_owner_id" required="1"/>
+                    <!--<field name="email"/>-->
+                    <field name="partner_category_id" widget="many2many_tags" options="{'color_field': 'color'}" readonly="1"/>
+                    <field name="mobile"/>
+                    <!--<field name="phone" string="Landline"/>-->
+                    <field name="pet_name_id" required="1"/>
+                    <!--<field name="pet_name_id" domain="[('partner_id.id','=','97')]" required="1"/>-->
+                    <field name="type_of_animal" readonly="1"/>
+                    <field name="breed" readonly="1"/>
+                    <field name="sex" readonly="1"/>
+                    <field name="last_vaccination" readonly="1"/>
+					<field name="ailment" required="1"/>
+                    <field name="tag_ids" widget="many2many_tags" readonly="1"/>
+                    <field name="user_id" string="Assigned To"/>
+                    <field name="duration"/>
+                </xpath>
+                <xpath expr="//field[@name='duration']" position="replace">
+                    <field name="stage_id" required="1"/>
+                    <button name="open_vet_form" type="object" string="Open"></button>
+                </xpath>
+                <xpath expr="//field[@name='start']" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='stop']" position="replace">
+                </xpath>
+                <xpath expr="//field[@name='partner_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='location']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='stage_id']" position="after">
+                </xpath>
+            </field>
+        </record>
+		
+		
+        <record id="view_calendar_event_form_inherit" model="ir.ui.view">
+            <field name="name">calendar.event.kanban.form</field>
+            <field name="model">calendar.event</field>
+            <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="before">
+                    <header>
+                        <field name="stage_id" widget="statusbar" clickable="1"/>
+                    </header>
+                </xpath>
+                <xpath expr="//sheet//div[@name='button_box']" position="inside">
+                    <button class="oe_stat_button" type="object" name="view_sale" icon="fa-usd">
+                        <field string="Quotation/Bills" name="sale_order_count" widget="statinfo"/>
+                    </button>
+                    <button class="oe_stat_button" type="object" name="view_invoice" icon="fa-pencil-square-o">
+                        <field string="Invoices" name="invoice_count" widget="statinfo"/>
+                    </button>
+                    <button class="oe_stat_button" type="object" name="view_prescription" icon="fa-usd">
+                        <field string="Prescriptions" name="prescriptions_count" widget="statinfo"/>
+                    </button>
+                </xpath>
+
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="required">0</attribute>
+                    <attribute name="readonly">1</attribute>
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//label[@for='name']" position="attributes">
+                    <attribute name="string">Appointment Name</attribute>
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_ids']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//label[@for='partner_ids']" position="attributes">
+                    <attribute name="string">Attendees</attribute>
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[@name='page_details']" position="attributes">
+                    <attribute name="string">Appointment Details</attribute>
+                </xpath>
+                <xpath expr="//label[@for='description']" position="attributes">
+                    <attribute name="string">Appointment Detail</attribute>
+                </xpath>
+
+                <xpath expr="//notebook" position="before">
+                    <group>
+                        <group>
+                            <field name="start_date" required="1"/>
+                            <field name="pet_owner_id" required="1"/>
+                            <field name="email"/>
+                            <field name="mobile"/>
+                            <field name="phone" string="Landline"/>
+                            <field name="partner_category_id" widget="many2many_tags" readonly="1"/>
+                            <field name="user_id" string="Assigned To"/>
+                        </group>
+                        <group>
+                            <field name="start_time" required="1"/>
+                            <field name="pet_name_id" required="1"/>
+                            <field name="type_of_animal" readonly="1"/>
+                            <field name="breed" readonly="1"/>
+                            <field name="sex" readonly="1"/>
+							<field name="birthdate" readonly="1"/>
+                            <field name="last_vaccination" readonly="1"/>
+                            <field name="tag_ids" widget="many2many_tags" readonly="1"/>
+                            <field name="ailment" required="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="history"/>
+                            <field name="diagnosis"/>
+                        </group>
+                        <group>
+                            <field name="treatments"/>
+                            <field name="vaccination"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Laboratory">
+                            <field name="bloodtest"/>
+                            <field name="cpvtest"/>
+                            <field name="glucose"/>
+                            <field name="urinalysis"/>
+                            <field name="skinscraping"/>
+                            <field name="flourescine"/>
+                            <field name="schirmertest"/>
+                            <field name="c_s"/>
+                            <field name="dipstick_cathete"/>
+                            <field name="dipstick"/>
+                            <field name="Other"/>
+                        </group>
+                        <group string="Physical Exam">
+						    <field name="weight"/>
+                            <field name="temprature"/>
+                            <field name="pulse"/>
+                            <field name="respiration"/>
+                            <field name="muscular_skeletal"/>
+                            <field name="abdominal"/>
+                            <field name="skin"/>
+                            <field name="Other1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>                            
+                            <field name="plan"/>
+                        </group>
+                        <group>                            
+                            <!--<field name="surgical_procedure"/>-->
+                        </group>
+                    </group>
+                </xpath>
+
+                <xpath expr="//page[@name='page_misc']" position="replace">
+                </xpath>
+
+                <xpath expr="//page[@name='page_details']" position="before">
+                    <page string="Hospitalisation">
+                        <group>
+                            <group>
+                                <field name="reason_for_admission"/>
+                                <field name="hospital_record"/>
+                                <field name="xray"/>
+                                <field name="ultrasound"/>
+                            </group>
+                            <group>
+                                <field name="hospital_treatment"/>
+                                <field name="hospital_plan"/>
+							    <field name="pathology"/>
+                                <field name="bloods"/>
+                            </group>
+                        </group>
+                    </page>
+
+                    <!--<page string="History">
+                        <group>
+                            <group string="History">
+                                <field name="history"/>
+                                <field name="diagnosis"/>
+                                <field name="physical_exam"/>
+                            </group>
+                            <group string="History2">
+                            </group>
+                        </group>
+                    </page>
+
+                    <page string="Laboratory">
+                        <group>
+                            <group string="Laboratory">
+                                <field name="laboratory"/>
+                                <field name="treatments"/>
+                                <field name="vaccination"/>
+                            </group>
+                            <group string="Laboratory2">
+                            </group>
+                        </group>
+                    </page>-->
+
+                    <page string="Bills" name="bills">
+                        <field name="bill_ids">
+                        </field>
+                    </page>
+
+                    <page string="Invoice" name="invoice" groups="base.group_no_one">
+                        <field name="invoice_ids">
+                            <tree string="Invoice" editable="top" create="false" delete="false">
+                                <field name="name"/>
+                                <field name="invoice_date_due"/>
+                                <field name="amount_total_signed"/>
+                                <field name="state"/>
+                                <field name="payment_state"/>
+                            </tree>
+                        </field>
+                    </page>
+
+                    <page string="Prescription" name="prescription">
+                        <field name="prescription_ids">
+                        </field>
+                    </page>
+
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_calendar_event_kanban_view" model="ir.ui.view">
+            <field name="name">calendar.event.kanban</field>
+            <field name="model">calendar.event</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="stage_id">
+                    <field name="stage_id"/>
+                    <!--                    <field name="color"/>-->
+                    <!--                    <field name="priority"/>-->
+                    <!--                    <field name="expected_revenue"/>-->
+                    <field name="kanban_state"/>
+                    <!--                    <field name="activity_date_deadline"/>-->
+                    <!--                    <field name="user_email"/>-->
+                    <field name="user_id"/>
+                    <!--                    <field name="partner_id"/>-->
+                    <!--                    <field name="activity_summary"/>-->
+                    <field name="active"/>
+                    <!--                    <field name="company_currency"/>-->
+                    <!--                    <field name="activity_state"/>-->
+                    <!--                    <field name="activity_ids"/>-->
+                    <progressbar field="kanban_state"
+                                 colors="{&quot;planned&quot;: &quot;success&quot;, &quot;today&quot;: &quot;warning&quot;, &quot;overdue&quot;: &quot;danger&quot;}"
+                                 help="This bar allows to filter the opportunities based on scheduled activities."/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class=" oe_kanban_global_click">
+                                <div class="o_dropdown_kanban dropdown">
+
+                                    <a class="dropdown-toggle o-no-caret btn" role="button" data-toggle="dropdown"
+                                       data-display="static" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                        <span class="fa fa-ellipsis-v"/>
+                                    </a>
+                                    <div class="dropdown-menu" role="menu">
+                                        <t t-if="widget.editable">
+                                            <a role="menuitem" type="edit" class="dropdown-item">Edit</a>
+                                        </t>
+                                        <t t-if="widget.deletable">
+                                            <a role="menuitem" type="delete" class="dropdown-item">Delete</a>
+                                        </t>
+                                        <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                    </div>
+                                </div>
+                                <div class="oe_kanban_content">
+                                    <div class="o_kanban_record_title">
+                                        <strong>
+                                            <field name="name"/>
+                                        </strong>
+                                    </div>
+
+                                    <div class="o_kanban_record_subtitle">
+                                        <!--                                        <t t-if="record.expected_revenue.raw_value">-->
+                                        <!--&lt;!&ndash;                                            <field name="expected_revenue" widget="monetary" options="{'currency_field': 'company_currency'}"/>&ndash;&gt;-->
+                                        <!--                                            <span t-if="record.recurring_revenue and record.recurring_revenue.raw_value"> + </span>-->
+                                        <!--                                        </t>-->
+                                        <!--                                        <t t-if="record.recurring_revenue and record.recurring_revenue.raw_value">-->
+                                        <!--&lt;!&ndash;                                            <field name="recurring_revenue" widget="monetary" options="{'currency_field': 'company_currency'}"/>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;                                            <field name="recurring_plan"/>&ndash;&gt;-->
+                                        <!--                                        </t>-->
+                                    </div>
+                                    <div>
+                                        <!--                                        <span t-if="record.partner_id.value" t-esc="record.partner_id.value"/>-->
+                                    </div>
+                                    <div>
+                                        <!--                                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>-->
+                                    </div>
+                                    <div class="o_kanban_record_bottom">
+                                        <div class="oe_kanban_bottom_left">
+                                            <!--                                            <field name="priority" widget="priority" groups="base.group_user"/>-->
+                                            <!--                                            <field name="activity_ids" widget="kanban_activity"/>-->
+                                        </div>
+                                        <div class="oe_kanban_bottom_right">
+                                            <field name="user_id" widget="many2one_avatar_user"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="oe_clear"/>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Inherit Calendar Search View -->
+        <record id="view_calendar_event_search_inherit" model="ir.ui.view">
+            <field name="name">calendar.event.search.inherit</field>
+            <field name="model">calendar.event</field>
+            <field name="inherit_id" ref="calendar.view_calendar_event_search"/>
+            <field name="arch" type="xml">
+                <!--<xpath expr="//search" position="inside">-->
+                <xpath expr="//filter[@name='mymeetings']" position="after">
+                    <filter string="Todays Appointments" name="todays_appointments"
+                    domain="[('start_date','=',time.strftime('%Y-%m-%d'))]"/>
+                    <filter string="Future Appointments" name="future_appointments"
+                            domain="[('start_date','&gt;',time.strftime('%Y-%m-%d'))]"/>
+                    <filter string="Previous Appointments" name="previous_appointments"
+                            domain="[('start_date','&lt;',time.strftime('%Y-%m-%d'))]"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="prescription_form_view" model="ir.ui.view">
+            <field name="name">prescription.form</field>
+            <field name="model">prescription</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" required="1" placeholder="Name..."/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_id"/>
+                                <field name="appointment_id"/>
+                                <field name="date"/>
+                                <field name="user_id" invisible="1"/>
+                                <field name="prescription_tags" widget="many2many_tags"/>
+                            </group>
+                        </group>
+                        <field name="notes" placeholder="Type down your notes here..." nolabel="1"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="pets_form_view" model="ir.ui.view">
+            <field name="name">pets.form</field>
+            <field name="model">pets</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <field class="oe_avatar" widget="image" name="image"/>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" required="1" placeholder="Name..."/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_id" required="1"/>
+                                <field name="birthdate"/>
+                                <field name="animal_type"/>
+                                <field name="breed"/>
+                                <field name="sex"/>
+                            </group>
+                            <group>
+                                <field name="last_vaccination"/>
+                                <field name="tag_ids" widget="many2many_tags"/>
+                                <field name="description"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Appointments">
+                                <field name="appointment_ids">
+                                    <tree create="false" delete="false">
+                                        <field name="start_date" required="1"/>
+                                        <field name="start_time" required="1"/>
+                                        <field name="pet_owner_id" string="Pet Owner"/>
+								        <field name="email"/>
+					                    <field name="mobile"/>
+					                    <field name="phone"/>
+					                    <field name="pet_name_id"/>
+                                        <field name="categ_ids" widget="many2many_tags" string="Tags"/>
+                                    </tree>
+                                </field>
+                            </page>
+							<page string="Vaccinations">
+                                <field name="vaccination_ids">
+                                    <tree create="false" delete="false">
+                                        <field name="date" string="ReVaccination Date"/>
+                                        <field name="stage" string="Stage"/>
+                                        <field name="pet_owner_id" string="Pet Owner"/>
+										<field name="email"/>
+					                    <field name="mobile"/>
+					                    <field name="phone"/>
+					                    <field name="pet_name_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+							<page string="Hospitalizations">
+                                <field name="hospitalization_ids">
+                                    <tree create="false" delete="false">
+                                        <field name="date" string="Hospitalization Date"/>
+                                        <field name="stage" string="Stage"/>
+                                        <field name="pet_owner_id" string="Pet Owner"/>
+										<field name="email"/>
+					                    <field name="mobile"/>
+					                    <field name="phone"/>
+					                    <field name="pet_name_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="prescription_tree_view" model="ir.ui.view">
+            <field name="name">prescription.form</field>
+            <field name="model">prescription</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="user_id" string="Responsible"/>
+                    <field name="prescription_tags" widget="many2many_tags"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="invoice_tree_view" model="ir.ui.view">
+            <field name="name">invoice.tree</field>
+            <field name="model">account.move</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="invoice_date_due"/>
+                    <field name="amount_total_signed"/>
+                    <field name="state"/>
+                    <field name="payment_state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="pets_tree_view" model="ir.ui.view">
+            <field name="name">pets.form</field>
+            <field name="model">pets</field>
+            <field name="arch" type="xml">
+                <!--<tree decoration-danger="name" decoration-success="partner_id" default_order="name desc">-->
+                <tree default_order="name asc">
+                    <field name="name" string="Pet Name"/>
+                    <field name="partner_id"/>
+                    <field name="sex"/>
+                    <field name="breed"/>
+					<field name="animal_type"/>
+                    <field name="birthdate"/>
+                    <field name="last_vaccination"/>
+                    <!--<field name="tag_ids" widget="many2many_tags"/>-->
+                </tree>
+            </field>
+        </record>
+        <!-- actions opening views on models -->
+		
+		<!-- Inherit Contact Tags Form View -->
+        <record id="view_partner_category_form_inherit" model="ir.ui.view">
+            <field name="name">res.partner.category.form.inherit</field>
+            <field name="model">res.partner.category</field>
+            <field name="inherit_id" ref="base.view_partner_category_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='active']" position="after">
+                    <field name="color" required="1"/>
+                </xpath>
+            </field>
+        </record>
+		
+		<!-- Inherit Contact Tags Tree View -->
+        <record id="view_partner_category_tree_inherit" model="ir.ui.view">
+            <field name="name">res.partner.category.tree.inherit</field>
+            <field name="model">res.partner.category</field>
+            <field name="inherit_id" ref="base.view_partner_category_list"/>
+            <field name="arch" type="xml">
+				<xpath expr="//tree" position="attributes">
+                    <attribute name="editable">bottom</attribute>
+	            </xpath>
+                <!--<xpath expr="//field[@name='display_name']" position="after">-->
+				<xpath expr="//field[@name='display_name']" position="replace">
+				    <field name="color"/>
+                    <field name="name" required="1"/>
+                    <field name="color_def" required="0"/>				
+					<field name="color_indicator" readonly="1"/>
+					<field name="active"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_appointment_stages">
+            <field name="name">Appointment Stages</field>
+            <field name="res_model">appointment.stages</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_prescription">
+            <field name="name">Prescriptions</field>
+            <field name="res_model">prescription</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_pets">
+            <field name="name">Pets</field>
+            <field name="res_model">pets</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_appointments">
+            <field name="name">Appointments</field>
+            <field name="res_model">calendar.event</field>
+            <field name="view_mode">tree,kanban,calendar,form</field>
+            <field name="context">{"search_default_todays_appointments":1}</field>
+        </record>
+        <!--    <record id="calendar.action_calendar_event" model="ir.actions.act_window">-->
+        <!--        <field name="view_mode">kanban,calendar,tree,form</field>-->
+        <!--    </record>-->
+        <record model="ir.actions.act_window" id="action_customer">
+            <field name="name">Customers</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_bill">
+            <field name="name">Bills</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_invoices">
+            <field name="name">Invoices</field>
+            <field name="res_model">account.move</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Veterinary" id="veterinary_odoo_main_menu"/>
+		
+        <menuitem name="Appointments" id="veterinary_odoo_sub_menu" parent="veterinary_v14.veterinary_odoo_main_menu"
+                  action="action_appointments" sequence="1"/>		  
+				  
+        <menuitem name="Customer" id="veterinary_odoo_customer_menu" parent="veterinary_v14.veterinary_odoo_main_menu"
+                  action="action_customer" sequence="2"/>
+				  
+        <menuitem name="Bills" id="veterinary_odoo_quotation_menu" parent="veterinary_v14.veterinary_odoo_main_menu"
+                  action="action_bill" sequence="5"/>
+				  
+        <menuitem name="Invoices" id="veterinary_odoo_invoices_menu" parent="veterinary_v14.veterinary_odoo_main_menu"
+                  action="action_invoices" sequence="6"/>
+				  
+        <menuitem name="Prescription" id="veterinary_odoo_prescription_menu" parent="veterinary_v14.veterinary_odoo_main_menu" 
+		          action="action_prescription" sequence="7"/>
+				  
+        <menuitem name="Pets" id="veterinary_odoo_pets_menu" parent="veterinary_v14.veterinary_odoo_main_menu"
+                  action="action_pets" sequence="8"/>
+				  		  
+        <menuitem name="Configuration" id="veterinary_odoo_sub_menu_config"
+                  parent="veterinary_v14.veterinary_odoo_main_menu" sequence="9"/>
+				  
+        <menuitem name="Appointment Stages" id="veterinary_odoo_menu_appointment_stages"
+                  parent="veterinary_v14.veterinary_odoo_sub_menu_config" action="action_appointment_stages"
+                  sequence="1"/>
+				  				  
+        <!--account.action_move_out_invoice_type-->
+    </data>
+</odoo>

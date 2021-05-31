@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- https://www.odoo.com/documentation/14.0/howtos/backend.html -->
+<odoo>
+    <data>
+        <record id="appointment_tags_tree_view" model="ir.ui.view">
+            <field name="name">appointment.tags.tree</field>
+            <field name="model">appointment.tags</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" required="1"/>
+                    <field name="color" required="1" widget="color_picker"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="appointment_tags_form_view" model="ir.ui.view">
+            <field name="name">appointment.tags.form</field>
+            <field name="model">appointment.tags</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group col="4">
+                            <field name="name" string="Name" required="1"/>
+                            <field name="color" string="Color" required="1" widget="color_picker"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="patient_tag_tree_view" model="ir.ui.view">
+            <field name="name">patient.tag.tree</field>
+            <field name="model">patient.tag</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" required="1"/>
+                    <field name="color" required="1" widget="color_picker"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="patient_tag_form_view" model="ir.ui.view">
+            <field name="name">patient.tag.form</field>
+            <field name="model">patient.tag</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group col="4">
+                            <field name="name" string="Name" required="1"/>
+                            <field name="color" string="Color" required="1" widget="color_picker"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="prescription_tag_tree_view" model="ir.ui.view">
+            <field name="name">prescription.tag.tree</field>
+            <field name="model">prescription.tag</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" required="1"/>
+                    <field name="color" required="1" widget="color_picker"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="prescription_tag_form_view" model="ir.ui.view">
+            <field name="name">prescription.tag.form</field>
+            <field name="model">prescription.tag</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group col="4">
+                        <field name="name" string="Name" required="1"/>
+                        <field name="color" string="Color" widget="color_picker" required="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="animal_type_tag_tree_view" model="ir.ui.view">
+            <field name="name">animal.type.tag.tree</field>
+            <field name="model">animal.type.tag</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="animal_type_tag_form_view" model="ir.ui.view">
+            <field name="name">animal.type.tag.form</field>
+            <field name="model">animal.type.tag</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group col="4">
+                            <field name="name" string="Name" required="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="animal_type_tree_view" model="ir.ui.view">
+            <field name="name">animal.type.tree</field>
+            <field name="model">animal.type</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" required="1"/>
+                    <field name="animal_tag_ids" required="1"/>
+                    <field name="notes" required="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="animal_type_form_view" model="ir.ui.view">
+            <field name="name">animal.type.form</field>
+            <field name="model">animal.type</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group col="4">
+                            <field name="name" string="Name" required="1"/>
+                            <field name="animal_tag_ids" string="Tag" required="1"/>
+                            <field name="notes" string="Note" required="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_animal_type">
+          <field name="name">Animal Type</field>
+          <field name="res_model">animal.type</field>
+          <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_patient_tags">
+          <field name="name">Appointment Tags</field>
+          <field name="res_model">appointment.tags</field>
+          <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_patient_tags">
+          <field name="name">Patient Tag</field>
+          <field name="res_model">patient.tag</field>
+          <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_prescription_tags">
+          <field name="name">Prescription Tag</field>
+          <field name="res_model">prescription.tag</field>
+          <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_animal_type_tags">
+          <field name="name">Animal Type Tag</field>
+          <field name="res_model">animal.type.tag</field>
+          <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_appointment_tags">
+          <field name="name">Appointment Tags</field>
+          <field name="res_model">appointment.tags</field>
+          <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Appointment Tags" id="veterinary_odoo_menu_appointment_tags"
+                  parent="veterinary_v14.veterinary_odoo_sub_menu_config" action="action_appointment_tags" sequence="2"/>
+				  
+        <menuitem name="Patient Tags" id="veterinary_odoo_menu_patient_tags"
+                  parent="veterinary_v14.veterinary_odoo_sub_menu_config" action="action_patient_tags" sequence="3"/>
+				  
+        <menuitem name="Prescription Tags" id="veterinary_odoo_menu_prescription_tags"
+                  parent="veterinary_v14.veterinary_odoo_sub_menu_config" action="action_prescription_tags" sequence="4"/>
+				  
+        <menuitem name="Animal Type" id="veterinary_odoo_menu_animal_type"
+                  parent="veterinary_v14.veterinary_odoo_sub_menu_config" action="action_animal_type" sequence="5"/>
+				  
+        <menuitem name="Animal Type Tags" id="veterinary_odoo_menu_animal_type_stages"
+                  parent="veterinary_v14.veterinary_odoo_sub_menu_config" action="action_animal_type_tags" sequence="6"/>
+
+    </data>
+</odoo>

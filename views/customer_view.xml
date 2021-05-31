@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- https://www.odoo.com/documentation/14.0/howtos/backend.html -->
+<odoo>
+
+    <!--form view res partner -->
+    <record id="res_partner_form_view" model="ir.ui.view">
+        <field name="name">res.partner.form.view</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//sheet//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button" type="object" name="view_appointment" icon="fa-usd">
+                        <field string="Appointment" name="appointment_count" widget="statinfo"/>
+                </button>
+            </xpath>
+
+            <xpath expr="//page[@name='internal_notes']" position="before">
+                <page string="Appointment" name="pets">
+                    <field name="appointment_ids" context="{'default_pet_owner_id':active_id}">
+                    </field>
+                </page>
+                <page string="Pets" name="pets">
+                    <field name="pets_ids" context="{'default_partner_id':active_id}">
+                    </field>
+                </page>
+            </xpath>
+
+            <!--<xpath expr="//page[@name='internal_notes']" position="replace">
+            </xpath>
+            <xpath expr="//label[@for='address_name']" position="attributes">
+                <attribute name="string">Address</attribute>
+            </xpath>
+            <xpath expr="//label[@name='address_name']" position="attributes">
+                <attribute name="string">Address</attribute>
+            </xpath>
+            <xpath expr="//page[@name='page_details']" position="attributes">
+                <attribute name="string">Appointment Details</attribute>
+            </xpath>-->
+
+            <xpath expr="//page[@name='contact_addresses']" position="replace">
+            </xpath>
+            <xpath expr="//page[@name='sales_purchases']" position="replace">
+            </xpath>
+            <xpath expr="//page[@name='accounting']" position="replace">
+            </xpath>
+
+            <field name="country_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="company_type" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="state_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="zip" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+			<field name="parent_id" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="type" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="function" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="title" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="website" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="vat" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>

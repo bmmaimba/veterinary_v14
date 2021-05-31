@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- https://www.odoo.com/documentation/14.0/howtos/backend.html -->
+<odoo>
+
+    <!--form view invoice -->
+    <record id="invoice_form_view" model="ir.ui.view">
+        <field name="name">invoice.form.view</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='ref']" position="after">
+                <field name="appointment_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_appointment_stages,access_appointment_stages,model_appointment_stages,base.group_user,1,1,1,1
+access_prescription,access_prescription,model_prescription,base.group_user,1,1,1,1
+access_pets,access_pets,model_pets,base.group_user,1,1,1,1
+access_appointment_tags,access_appointment_tags,model_appointment_tags,base.group_user,1,1,1,1
+access_animal_type_tag,access_animal_type_tag,model_animal_type_tag,base.group_user,1,1,1,1
+access_animal_type,access_animal_type,model_animal_type,base.group_user,1,1,1,1
+access_patient_tag,access_patient_tag,model_patient_tag,base.group_user,1,1,1,1
+access_breed,access_breed,model_breed,base.group_user,1,1,1,1
+access_prescription_tag,access_prescription_tag,model_prescription_tag,base.group_user,1,1,1,1
+access_vaccinations,access_vaccinations,model_vaccinations,base.group_user,1,1,1,1
+access_hospitalisations,access_hospitalisations,model_hospitalisations,base.group_user,1,1,1,1

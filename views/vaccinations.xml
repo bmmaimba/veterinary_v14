@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- https://www.odoo.com/documentation/14.0/howtos/backend.html -->
+<odoo>       
+
+        <record id="vaccinations_form_view" model="ir.ui.view">
+            <field name="name">vaccinations.form</field>
+            <field name="model">vaccinations</field>
+            <field name="arch" type="xml">
+                <form>					
+                    <sheet>
+					<header>
+						<field name="stage" widget="statusbar" statusbar_visible="Today,Future,Done" options="{'clickable': '1'}"/>
+                    </header>
+					   <group>
+                        <!--<field class="oe_avatar" widget="image" name="image"/>-->
+                        <div class="oe_title">
+                            <!--<h1>
+                                <field name="name" required="1" placeholder="Name..."/>
+                            </h1>-->
+                        </div>
+					   </group>
+					   <group>
+					        <group>
+                                <field name="date"/>
+								<field name="pet_owner_id"/>
+								<field name="email"/>
+								<field name="mobile"/>
+								<field name="phone"/>
+                                <!--<field name="stage"/>-->								
+							</group>
+							<group>
+                                <field name="type_of_vacc"/>
+								<field name="pet_name_id"/>
+								<field name="type_of_animal"/>
+								<field name="breed"/>
+								<field name="sex"/>
+								<field name="last_vaccination"/>
+								<field name="next_vaccination"/>
+							</group>								
+					   </group>
+					   <group>
+                                <field name="description"/>
+					   </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="vaccinations_tree_view" model="ir.ui.view">
+            <field name="name">vaccinations.tree</field>
+            <field name="model">vaccinations</field>
+            <field name="arch" type="xml">
+                <tree default_order="date asc" editable="top">
+				    <!--<field name="name"/>-->
+                    <field name="date"/>
+					<field name="stage"/>
+					<field name="type_of_vacc"/>
+					<field name="pet_owner_id"/>
+					<field name="email"/>
+					<field name="mobile"/>
+					<field name="phone"/>
+					<field name="pet_name_id"/>
+					<field name="type_of_animal"/>
+					<field name="breed"/>
+					<field name="sex"/>
+					<field name="last_vaccination"/>
+					<field name="next_vaccination"/>
+					<button name="open_vaccination_form" type="object" string="Open"></button>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_vaccinations">
+            <field name="name">Vaccinations</field>
+            <field name="res_model">vaccinations</field>
+            <field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Vaccination Record</p>
+			</field>
+        </record>
+		
+		<menuitem name="Vaccinations" id="veterinary_odoo_vaccinations_menu" parent="veterinary_v14.veterinary_odoo_main_menu"
+                  action="action_vaccinations" sequence="3"/>	  
+
+</odoo>

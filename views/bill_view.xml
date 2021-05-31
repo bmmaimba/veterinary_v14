@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- https://www.odoo.com/documentation/14.0/howtos/backend.html -->
+<odoo>
+    <!--form view  bills -->
+    <record id="bill_form_view" model="ir.ui.view">
+        <field name="name">bill.form.view</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                <field name="appointment_id"/>
+            </xpath>
+            <xpath expr="//page[@name='customer_signature']" position="after">
+                <page string="Invoices" name="invoice">
+                    <field name="invoice_ids">
+                        <tree editable="bottom">
+                            <field name="name"/>
+                            <field name="invoice_date"/>
+                            <field name="invoice_date_due"/>
+                            <field name="amount_total_signed"/>
+                            <field name="state"/>
+                            <field name="payment_state"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
