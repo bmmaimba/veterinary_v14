@@ -26,9 +26,12 @@
                     <field name="type_of_animal" readonly="1"/>
                     <field name="breed" readonly="1"/>
                     <field name="sex" readonly="1"/>
-                    <field name="last_vaccination" readonly="1"/>
-					<field name="ailment" required="1"/>
                     <field name="tag_ids" widget="many2many_tags" readonly="1"/>
+                    <field name="last_vaccination" readonly="1"/>					    
+                    <field name="appointment_type"/>
+                    <field name="ailment" attrs="{'invisible': [('appointment_type', '=', 'Vaccination')], 'required': [('appointment_type', '!=', 'Vaccination')]}"/>                            
+                    <field name="type_of_vacc" attrs="{'invisible': [('appointment_type', '!=', 'Vaccination')], 'required': [('appointment_type', '=', 'Vaccination')]}"/>
+					<field name="vacc_date" attrs="{'invisible': [('appointment_type', '!=', 'Vaccination')], 'required': [('appointment_type', '=', 'Vaccination')]}"/>
                     <field name="user_id" string="Assigned To"/>
                     <field name="duration"/>
                 </xpath>
@@ -99,6 +102,18 @@
 
                 <xpath expr="//notebook" position="before">
                     <group>
+                        <group>						    
+                            <field name="appointment_type"/>
+							<field name="vacc_date" attrs="{'invisible': [('appointment_type', '!=', 'Vaccination')], 'required': [('appointment_type', '=', 'Vaccination')]}"/>
+							<field name="hospitalisation_id" attrs="{'invisible': [('appointment_type', '!=', 'Hospitalization')]}"/>
+                        </group>
+                        <group>
+						    <field name="ailment" attrs="{'invisible': [('appointment_type', '=', 'Vaccination')], 'required': [('appointment_type', '!=', 'Vaccination')]}"/>                            
+                            <field name="type_of_vacc" attrs="{'invisible': [('appointment_type', '!=', 'Vaccination')], 'required': [('appointment_type', '=', 'Vaccination')]}"/>	
+                            <field name="vaccination_id" attrs="{'invisible': [('appointment_type', '!=', 'Vaccination')]}"/>
+                        </group>
+                    </group>
+                    <group>
                         <group>
                             <field name="start_date" required="1"/>
                             <field name="pet_owner_id" required="1"/>
@@ -116,11 +131,10 @@
                             <field name="sex" readonly="1"/>
 							<field name="birthdate" readonly="1"/>
                             <field name="last_vaccination" readonly="1"/>
-                            <field name="tag_ids" widget="many2many_tags" readonly="1"/>
-                            <field name="ailment" required="1"/>
+                            <field name="tag_ids" widget="many2many_tags" readonly="1"/>                            
                         </group>
                     </group>
-                    <group>
+					<group>
                         <group>
                             <field name="history"/>
                             <field name="diagnosis"/>
@@ -163,14 +177,7 @@
                             <!--<field name="surgical_procedure"/>-->
                         </group>
                     </group>
-                </xpath>
-
-                <xpath expr="//page[@name='page_misc']" position="replace">
-                </xpath>
-
-                <xpath expr="//page[@name='page_details']" position="before">
-                    <page string="Hospitalisation">
-                        <group>
+					<group string="Hospitalisation">
                             <group>
                                 <field name="reason_for_admission"/>
                                 <field name="hospital_record"/>
@@ -184,31 +191,12 @@
                                 <field name="bloods"/>
                             </group>
                         </group>
-                    </page>
+                </xpath>
 
-                    <!--<page string="History">
-                        <group>
-                            <group string="History">
-                                <field name="history"/>
-                                <field name="diagnosis"/>
-                                <field name="physical_exam"/>
-                            </group>
-                            <group string="History2">
-                            </group>
-                        </group>
-                    </page>
+                <xpath expr="//page[@name='page_misc']" position="replace">
+                </xpath>
 
-                    <page string="Laboratory">
-                        <group>
-                            <group string="Laboratory">
-                                <field name="laboratory"/>
-                                <field name="treatments"/>
-                                <field name="vaccination"/>
-                            </group>
-                            <group string="Laboratory2">
-                            </group>
-                        </group>
-                    </page>-->
+                <xpath expr="//page[@name='page_details']" position="before">
 
                     <page string="Bills" name="bills">
                         <field name="bill_ids">
@@ -406,7 +394,7 @@
 							<page string="Vaccinations">
                                 <field name="vaccination_ids">
                                     <tree create="false" delete="false">
-                                        <field name="date" string="ReVaccination Date"/>
+                                        <field name="date" string="Vaccination Date"/>
                                         <field name="stage" string="Stage"/>
                                         <field name="pet_owner_id" string="Pet Owner"/>
 										<field name="email"/>

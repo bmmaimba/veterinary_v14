@@ -10,3 +10,5 @@ access_breed,access_breed,model_breed,base.group_user,1,1,1,1
 access_prescription_tag,access_prescription_tag,model_prescription_tag,base.group_user,1,1,1,1
 access_vaccinations,access_vaccinations,model_vaccinations,base.group_user,1,1,1,1
 access_hospitalisations,access_hospitalisations,model_hospitalisations,base.group_user,1,1,1,1
+access_base_automation,base.automation,base_automation.model_base_automation,base.group_user,1,1,1,1
+access_base_automation_config,base.automation config,base_automation.model_base_automation,base.group_system,1,1,1,1

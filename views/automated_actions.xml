@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- https://www.odoo.com/documentation/14.0/howtos/backend.html -->
+<odoo>
+    <!--<data>-->
+		<!-- <record id="test_my_code" model="base.automation">-->
+		<!-- <record id="test_my_code" model="ir.actions.server"> -->
+			<!-- <field name="name">MySample</field>-->
+		<!--<field name="active" eval="True"/> -->
+		    <!-- <field name="active">1</field>-->
+		<!--<field name="model_id" ref="sale.model_sale_order"/>--> <!-- This was the model I used -->
+			<!-- <field name="model_id" ref="vaccinationvaccination"/>-->
+		<!--<field name="state">code</field>-->
+			<!-- <field name="state" ref="code"/>-->
+		<!--<field name="trigger">on_create_or_write</field>-->
+		<!-- <field name="trigger" ref="on_create_or_write"/> -->
+			<!-- <field name="trigger">on_create</field>-->
+			<!-- <field name="code"> </field>-->
+		<!-- </record>-->
+    <!-- </data>-->
+</odoo>

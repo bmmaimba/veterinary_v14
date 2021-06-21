@@ -26,7 +26,8 @@
 								<field name="email"/>
 								<field name="mobile"/>
 								<field name="phone"/>
-                                <!--<field name="stage"/>-->								
+                                <!--<field name="stage"/>-->
+								<field name="appointment_id"/>							
 							</group>
 							<group>
                                 <field name="type_of_vacc"/>
@@ -53,7 +54,6 @@
                 <tree default_order="date asc" editable="top">
 				    <!--<field name="name"/>-->
                     <field name="date"/>
-					<field name="stage"/>
 					<field name="type_of_vacc"/>
 					<field name="pet_owner_id"/>
 					<field name="email"/>
@@ -65,6 +65,7 @@
 					<field name="sex"/>
 					<field name="last_vaccination"/>
 					<field name="next_vaccination"/>
+					<field name="stage"/>
 					<button name="open_vaccination_form" type="object" string="Open"></button>
                 </tree>
             </field>

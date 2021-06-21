@@ -26,7 +26,8 @@
 								<field name="email"/>
 								<field name="mobile"/>
 								<field name="phone"/>
-                                <!--<field name="stage"/>-->								
+                                <!--<field name="stage"/>-->
+								<field name="hospitalisation_id"/>									
 							</group>
 							<group>
 								<field name="pet_name_id"/>

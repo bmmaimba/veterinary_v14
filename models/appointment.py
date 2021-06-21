@@ -4,10 +4,22 @@
 from odoo import models, fields, api, _
 from datetime import datetime
 
+from urllib.request import Request
+from urllib.request import urlopen
+
+#import urllib.request
+#import urllib
+#import urllib2
+#import json
+#import urllib.request
+#import urllib.parse
+#from urllib import urllib
+
 
 class CalendarEvent(models.Model):
     _inherit = "calendar.event"
-
+    
+    name = fields.Char(string="Appointment Name", required=False, readonly=True )
     stage_id = fields.Many2one('appointment.stages', group_expand="_read_group_stage_ids", string="Stage")
     kanban_state = fields.Selection([('inprogress', 'In Progress'), ('done', 'Ready'), ('blocked', 'Blocked')], string="Kanban State")
     pet_owner_id = fields.Many2one("res.partner", string="Pet Owner", required=True)
@@ -90,6 +102,17 @@ class CalendarEvent(models.Model):
     bloods = fields.Binary(string="Bloods")
     reason_for_admission = fields.Text(string="Reason for Admission")
     #assignted_to = fields.Many2one("res.users", string="Assigned To")
+    
+    appointment_type = fields.Selection([('Vaccination', 'Vaccination'), ('Hospitalization', 'Hospitalization'),
+                             ('Other', 'Other')
+                             ], string="Appointment Type", required=True)
+    type_of_vacc = fields.Selection([('Rabies', 'Rabies'), ('3in1', '3in1'), ('3in1Rabies', '3in1 & Rabies'), 
+                                     ('5in1', '5in1'), ('5in1Rabies', '5in1 & Rabies'), ('Leukemia', 'Leukemia')
+                                    ], string="Type of Vaccination")
+    vacc_date = fields.Date(string="Vaccination Date", default=datetime.today())
+    vaccination_id = fields.Many2one("vaccinations", string="Vaccination Record", readonly=True)  
+    
+    hospitalisation_id = fields.Many2one("hospitalisations", string="Hospitalisations Record", readonly=True) 
 
     def open_vet_form(self):
         return {
@@ -107,17 +130,16 @@ class CalendarEvent(models.Model):
     def onchange_pet_owner_id(self):
         if self.pet_owner_id:
             self.partner_ids = [(6,0, [self.env.user.partner_id.id, self.pet_owner_id.id])]
-            # self.pet_owner_id = self.pet_owner_id.id
-
-    @api.model
-    def create(self, vals):
-        if vals.get('pet_owner_id') and vals.get('pet_name_id') and vals.get('today_date'):
-            pet_owner_id = self.env['res.partner'].browse(vals.get('pet_owner_id'))
-            pet_name_id = self.env['pets'].browse(vals.get('pet_name_id'))
+            #self.pet_owner_id = self.pet_owner_id.id
+        
+    #@api.model
+    #def create(self, vals):
+        #if vals.get('pet_owner_id') and vals.get('pet_name_id') and vals.get('today_date'):
+            #pet_owner_id = self.env['res.partner'].browse(vals.get('pet_owner_id'))
+            #pet_name_id = self.env['pets'].browse(vals.get('pet_name_id'))
         #vals['name'] = "Appointment-" + pet_owner_id.name + "-" + pet_name_id.name + "-" + vals.get('today_date')
-        vals['name'] = "Appointment"
-        res = super(CalendarEvent, self).create(vals)
-        return res
+        #res = super(CalendarEvent, self).create(vals)
+        #return res
 
     @api.depends('pet_owner_id', 'prescriptions_count')
     def count_sale_order(self):
