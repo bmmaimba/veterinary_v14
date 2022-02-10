@@ -25,6 +25,7 @@ class Vaccinations(models.Model):
     breed = fields.Many2one('breed', related="pet_name_id.breed", string="Breed")
     sex = fields.Selection([('male', 'Male'), ('female', 'Female')], related="pet_name_id.sex", string="Gender")
     last_vaccination = fields.Date(related="pet_name_id.last_vaccination", string="Last Vaccination")
+    birthdate = fields.Date(related="pet_name_id.birthdate", string="Birthdate", required=True)
     next_vaccination = fields.Date(string="Next Vaccination")
     appointment_id = fields.Many2one("calendar.event", string="Related Appointment", readonly=True)
    

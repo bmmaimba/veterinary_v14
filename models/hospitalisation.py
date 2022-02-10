@@ -21,6 +21,7 @@ class Hospitalisations(models.Model):
     type_of_animal = fields.Many2one("animal.type", related="pet_name_id.animal_type", string="Species")
     breed = fields.Many2one('breed', related="pet_name_id.breed", string="Breed")
     sex = fields.Selection([('male', 'Male'), ('female', 'Female')], related="pet_name_id.sex", string="Gender")
+    birthdate = fields.Date(related="pet_name_id.birthdate", string="Birthdate", required=True)
     last_vaccination = fields.Date(related="pet_name_id.last_vaccination", string="Last Vaccination")
     hospitalisation_id = fields.Many2one("calendar.event", string="Related Appointment", readonly=True)
     

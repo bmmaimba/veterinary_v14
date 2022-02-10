@@ -35,6 +35,7 @@
 								<field name="type_of_animal"/>
 								<field name="breed"/>
 								<field name="sex"/>
+								<field name="birthdate"/>
 								<field name="last_vaccination"/>
 								<field name="next_vaccination"/>
 							</group>								
@@ -63,6 +64,7 @@
 					<field name="type_of_animal"/>
 					<field name="breed"/>
 					<field name="sex"/>
+					<field name="birthdate"/>
 					<field name="last_vaccination"/>
 					<field name="next_vaccination"/>
 					<field name="stage"/>
@@ -70,11 +72,25 @@
                 </tree>
             </field>
         </record>
-
+		
+        <record id="view_vaccinations_search" model="ir.ui.view">
+            <field name="name">vaccinations.search</field>
+            <field name="model">vaccinations</field>
+			<field name="type">search</field>
+			<field name="arch" type="xml">
+			    <search>
+                    <filter string="Todays Vaccinations" name="todays_vaccinations" domain="[('date','=',time.strftime('%Y-%m-%d'))]"/>
+                    <filter string="Future Vaccinations" name="future_vaccinations" domain="[('date','&gt;',time.strftime('%Y-%m-%d'))]"/>
+                    <filter string="Previous Vaccinations" name="previous_vaccinations" domain="[('date','&lt;',time.strftime('%Y-%m-%d'))]"/>
+                </search>
+            </field>
+        </record>
+		
         <record model="ir.actions.act_window" id="action_vaccinations">
             <field name="name">Vaccinations</field>
             <field name="res_model">vaccinations</field>
             <field name="view_mode">tree,form</field>
+            <field name="context">{"search_default_todays_vaccinations":1}</field>
 			<field name="help" type="html">
                 <p class="o_view_nocontent_smiling_face">Vaccination Record</p>
 			</field>
