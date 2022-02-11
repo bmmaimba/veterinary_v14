@@ -146,13 +146,13 @@ class CalendarEvent(models.Model):
         count_sale_order = self.env['sale.order'].search([('appointment_id', '=', self.id)])
         self.sale_order_count = len(count_sale_order)
 
-    @api.depends('pet_owner_id', 'prescriptions_count')
-    def count_invoice_total(self):
-        count_invoice = self.env['account.move'].search([('appointment_id', '=', self.id)])
-        count = 0.0
-        for total in count_invoice:
-            count += total.amount_total_signed
-        self.invoice_count += count
+##    @api.depends('pet_owner_id', 'prescriptions_count')
+##    def count_invoice_total(self):
+##        count_invoice = self.env['account.move'].search([('appointment_id', '=', self.id)])
+##        count = 0.0
+##        for total in count_invoice:
+##            count += total.amount_total_signed
+##        self.invoice_count += count
 
     @api.depends('pet_owner_id', 'prescriptions_count')
     def count_prescriptions(self):
