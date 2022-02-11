@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
-# https://www.odoo.com/documentation/14.0/howtos/backend.html
+-*- coding: utf-8 -*-
+https://www.odoo.com/documentation/14.0/howtos/backend.html
 
 from odoo import models, fields, api, _
 from datetime import datetime
@@ -146,13 +146,13 @@ class CalendarEvent(models.Model):
         count_sale_order = self.env['sale.order'].search([('appointment_id', '=', self.id)])
         self.sale_order_count = len(count_sale_order)
 
-##    @api.depends('pet_owner_id', 'prescriptions_count')
-##    def count_invoice_total(self):
-##        count_invoice = self.env['account.move'].search([('appointment_id', '=', self.id)])
-##        count = 0.0
-##        for total in count_invoice:
-##            count += total.amount_total_signed
-##        self.invoice_count += count
+   @api.depends('pet_owner_id', 'prescriptions_count')
+   def count_invoice_total(self):
+       count_invoice = self.env['account.move'].search([('appointment_id', '=', self.id)])
+       count = 0.0
+       for total in count_invoice:
+           count += total.amount_total_signed
+       self.invoice_count += count
 
     @api.depends('pet_owner_id', 'prescriptions_count')
     def count_prescriptions(self):
@@ -286,57 +286,57 @@ class Pets(models.Model):
         fields.append('partner_id')
         return super(Pets, self).default_get(fields)
 
-## class SaleOrder(models.Model):
-##     _inherit = "sale.order"
-## 
-##     appointment_id = fields.Many2one('calendar.event', string='Appointment')
-##     invoice_ids = fields.One2many('account.move', 'bill_id', string='Invoices')
-## 
-##     @api.model
-##     def default_get(self, fields):
-##         rec = super(SaleOrder, self).default_get(fields)
-##         appointment = self.env['calendar.event'].browse(self.env.context.get('active_id'))
-##         if self.partner_id not in rec:
-##             rec.update({
-##                 'partner_id': appointment.pet_owner_id,
-##                 'appointment_id': appointment.id,
-##             })
-##         return rec
+class SaleOrder(models.Model):
+    _inherit = "sale.order"
+
+    appointment_id = fields.Many2one('calendar.event', string='Appointment')
+    invoice_ids = fields.One2many('account.move', 'bill_id', string='Invoices')
+
+    @api.model
+    def default_get(self, fields):
+        rec = super(SaleOrder, self).default_get(fields)
+        appointment = self.env['calendar.event'].browse(self.env.context.get('active_id'))
+        if self.partner_id not in rec:
+            rec.update({
+                'partner_id': appointment.pet_owner_id,
+                'appointment_id': appointment.id,
+            })
+        return rec
 
 
-## class AccountMove(models.Model):
-##     _inherit = "account.move"
-## 
-##     appointment_id = fields.Many2one('calendar.event', string='Appointment')
-##     bill_id = fields.Many2one('sale.order', string='Bill')
-## 
-##     @api.model
-##     def default_get(self, fields):
-##         rec = super(AccountMove, self).default_get(fields)
-##         appointment = self.env['calendar.event'].browse(self.env.context.get('active_id'))
-##         if self.appointment_id not in rec:
-##             rec.update({
-##                 'appointment_id': appointment.id,
-##             })
-##         return rec
+class AccountMove(models.Model):
+    _inherit = "account.move"
+
+    appointment_id = fields.Many2one('calendar.event', string='Appointment')
+    bill_id = fields.Many2one('sale.order', string='Bill')
+
+    @api.model
+    def default_get(self, fields):
+        rec = super(AccountMove, self).default_get(fields)
+        appointment = self.env['calendar.event'].browse(self.env.context.get('active_id'))
+        if self.appointment_id not in rec:
+            rec.update({
+                'appointment_id': appointment.id,
+            })
+        return rec
     
-# class InvoiceTransfer(models.Model):
-#     _inherit = "stock.picking"
-#
-#     @api.model
-#     def create(self, vals):
-#         res = super(InvoiceTransfer, self).create(vals)
-#         for record in res:
-#             if record.picking_type_id.code == 'outgoing':
-#                 record.action_confirm()
-#                 record.action_assign()
-#                 if record.state == 'assigned':
-#                     immediate_transfer_line_ids = [
-#                         (0, 0, {'to_immediate': True, 'picking_id': record.id})
-#                     ]
-#                     pick_ids = [[6,0, [record.id]]]
-#                     data_id = self.env['stock.immediate.transfer'].create({'show_transfers':True, 'pick_ids':pick_ids,
-#                                                                  'immediate_transfer_line_ids':immediate_transfer_line_ids})
-#                     data_id.process()
-#         return res
+class InvoiceTransfer(models.Model):
+    _inherit = "stock.picking"
+    
+    @api.model
+    def create(self, vals):
+        res = super(InvoiceTransfer, self).create(vals)
+        for record in res:
+            if record.picking_type_id.code == 'outgoing':
+                record.action_confirm()
+                record.action_assign()
+                if record.state == 'assigned':
+                    immediate_transfer_line_ids = [
+                        (0, 0, {'to_immediate': True, 'picking_id': record.id})
+                    ]
+                    pick_ids = [[6,0, [record.id]]]
+                    data_id = self.env['stock.immediate.transfer'].create({'show_transfers':True, 'pick_ids':pick_ids,
+                                                                 'immediate_transfer_line_ids':immediate_transfer_line_ids})
+                    data_id.process()
+        return res
 
