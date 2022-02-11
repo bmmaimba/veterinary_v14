@@ -286,39 +286,39 @@ class Pets(models.Model):
         fields.append('partner_id')
         return super(Pets, self).default_get(fields)
 
-class SaleOrder(models.Model):
-    _inherit = "sale.order"
+## class SaleOrder(models.Model):
+##     _inherit = "sale.order"
+## 
+##     appointment_id = fields.Many2one('calendar.event', string='Appointment')
+##     invoice_ids = fields.One2many('account.move', 'bill_id', string='Invoices')
+## 
+##     @api.model
+##     def default_get(self, fields):
+##         rec = super(SaleOrder, self).default_get(fields)
+##         appointment = self.env['calendar.event'].browse(self.env.context.get('active_id'))
+##         if self.partner_id not in rec:
+##             rec.update({
+##                 'partner_id': appointment.pet_owner_id,
+##                 'appointment_id': appointment.id,
+##             })
+##         return rec
 
-    appointment_id = fields.Many2one('calendar.event', string='Appointment')
-    invoice_ids = fields.One2many('account.move', 'bill_id', string='Invoices')
 
-    @api.model
-    def default_get(self, fields):
-        rec = super(SaleOrder, self).default_get(fields)
-        appointment = self.env['calendar.event'].browse(self.env.context.get('active_id'))
-        if self.partner_id not in rec:
-            rec.update({
-                'partner_id': appointment.pet_owner_id,
-                'appointment_id': appointment.id,
-            })
-        return rec
-
-
-class AccountMove(models.Model):
-    _inherit = "account.move"
-
-    appointment_id = fields.Many2one('calendar.event', string='Appointment')
-    bill_id = fields.Many2one('sale.order', string='Bill')
-
-    @api.model
-    def default_get(self, fields):
-        rec = super(AccountMove, self).default_get(fields)
-        appointment = self.env['calendar.event'].browse(self.env.context.get('active_id'))
-        if self.appointment_id not in rec:
-            rec.update({
-                'appointment_id': appointment.id,
-            })
-        return rec
+## class AccountMove(models.Model):
+##     _inherit = "account.move"
+## 
+##     appointment_id = fields.Many2one('calendar.event', string='Appointment')
+##     bill_id = fields.Many2one('sale.order', string='Bill')
+## 
+##     @api.model
+##     def default_get(self, fields):
+##         rec = super(AccountMove, self).default_get(fields)
+##         appointment = self.env['calendar.event'].browse(self.env.context.get('active_id'))
+##         if self.appointment_id not in rec:
+##             rec.update({
+##                 'appointment_id': appointment.id,
+##             })
+##         return rec
     
 # class InvoiceTransfer(models.Model):
 #     _inherit = "stock.picking"
