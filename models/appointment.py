@@ -1,5 +1,5 @@
--*- coding: utf-8 -*-
-https://www.odoo.com/documentation/14.0/howtos/backend.html
+# -*- coding: utf-8 -*-
+# https://www.odoo.com/documentation/14.0/howtos/backend.html
 
 from odoo import models, fields, api, _
 from datetime import datetime
@@ -322,7 +322,7 @@ class AccountMove(models.Model):
     
 class InvoiceTransfer(models.Model):
     _inherit = "stock.picking"
-    
+
     @api.model
     def create(self, vals):
         res = super(InvoiceTransfer, self).create(vals)
