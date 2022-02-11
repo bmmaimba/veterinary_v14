@@ -146,13 +146,13 @@ class CalendarEvent(models.Model):
         count_sale_order = self.env['sale.order'].search([('appointment_id', '=', self.id)])
         self.sale_order_count = len(count_sale_order)
 
-   @api.depends('pet_owner_id', 'prescriptions_count')
-   def count_invoice_total(self):
-       count_invoice = self.env['account.move'].search([('appointment_id', '=', self.id)])
-       count = 0.0
-       for total in count_invoice:
-           count += total.amount_total_signed
-       self.invoice_count += count
+    @api.depends('pet_owner_id', 'prescriptions_count')
+    def count_invoice_total(self):
+        count_invoice = self.env['account.move'].search([('appointment_id', '=', self.id)])
+        count = 0.0
+        for total in count_invoice:
+            count += total.amount_total_signed
+        self.invoice_count += count
 
     @api.depends('pet_owner_id', 'prescriptions_count')
     def count_prescriptions(self):
@@ -320,23 +320,23 @@ class AccountMove(models.Model):
             })
         return rec
     
-class InvoiceTransfer(models.Model):
-    _inherit = "stock.picking"
-
-    @api.model
-    def create(self, vals):
-        res = super(InvoiceTransfer, self).create(vals)
-        for record in res:
-            if record.picking_type_id.code == 'outgoing':
-                record.action_confirm()
-                record.action_assign()
-                if record.state == 'assigned':
-                    immediate_transfer_line_ids = [
-                        (0, 0, {'to_immediate': True, 'picking_id': record.id})
-                    ]
-                    pick_ids = [[6,0, [record.id]]]
-                    data_id = self.env['stock.immediate.transfer'].create({'show_transfers':True, 'pick_ids':pick_ids,
-                                                                 'immediate_transfer_line_ids':immediate_transfer_line_ids})
-                    data_id.process()
-        return res
+# class InvoiceTransfer(models.Model):
+#     _inherit = "stock.picking"
+#
+#     @api.model
+#     def create(self, vals):
+#         res = super(InvoiceTransfer, self).create(vals)
+#         for record in res:
+#             if record.picking_type_id.code == 'outgoing':
+#                 record.action_confirm()
+#                 record.action_assign()
+#                 if record.state == 'assigned':
+#                     immediate_transfer_line_ids = [
+#                         (0, 0, {'to_immediate': True, 'picking_id': record.id})
+#                     ]
+#                     pick_ids = [[6,0, [record.id]]]
+#                     data_id = self.env['stock.immediate.transfer'].create({'show_transfers':True, 'pick_ids':pick_ids,
+#                                                                  'immediate_transfer_line_ids':immediate_transfer_line_ids})
+#                     data_id.process()
+#         return res
 
