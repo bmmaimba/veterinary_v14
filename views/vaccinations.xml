@@ -27,7 +27,7 @@
 								<field name="mobile"/>
 								<field name="phone"/>
                                 <!--<field name="stage"/>-->
-								<field name="appointment_id"/>							
+								<field name="appointment_id"/>
 							</group>
 							<group>
                                 <field name="type_of_vacc"/>
