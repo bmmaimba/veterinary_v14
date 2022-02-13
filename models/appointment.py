@@ -323,19 +323,19 @@ class AccountMove(models.Model):
 class InvoiceTransfer(models.Model):
      _inherit = "stock.picking"
 
-#     @api.model
-#     def create(self, vals):
-#         res = super(InvoiceTransfer, self).create(vals)
-#         for record in res:
-#             if record.picking_type_id.code == 'outgoing':
-#                 record.action_confirm()
-#                 record.action_assign()
-#                 if record.state == 'assigned':
-#                     immediate_transfer_line_ids = [
-#                         (0, 0, {'to_immediate': True, 'picking_id': record.id})
-#                     ]
-#                     pick_ids = [[6,0, [record.id]]]
-#                     data_id = self.env['stock.immediate.transfer'].create({'show_transfers':True, 'pick_ids':pick_ids,
-#                                                                  'immediate_transfer_line_ids':immediate_transfer_line_ids})
-#                     data_id.process()
-#         return res
+     @api.model
+     def create(self, vals):
+         res = super(InvoiceTransfer, self).create(vals)
+         for record in res:
+             if record.picking_type_id.code == 'outgoing':
+                 record.action_confirm()
+                 record.action_assign()
+                 if record.state == 'assigned':
+                     immediate_transfer_line_ids = [
+                         (0, 0, {'to_immediate': True, 'picking_id': record.id})
+                     ]
+                     pick_ids = [[6,0, [record.id]]]
+                     data_id = self.env['stock.immediate.transfer'].create({'show_transfers':True, 'pick_ids':pick_ids,
+                                                                  'immediate_transfer_line_ids':immediate_transfer_line_ids})
+                     data_id.process()
+         return res
