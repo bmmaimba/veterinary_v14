@@ -292,16 +292,16 @@ class SaleOrder(models.Model):
     appointment_id = fields.Many2one('calendar.event', string='Appointment')
     invoice_ids = fields.One2many('account.move', 'bill_id', string='Invoices')
 
-#    @api.model
-#    def default_get(self, fields):
-#        rec = super(SaleOrder, self).default_get(fields)
-#        appointment = self.env['calendar.event'].browse(self.env.context.get('active_id'))
-#        if self.partner_id not in rec:
-#            rec.update({
-#                'partner_id': appointment.pet_owner_id,
-#                'appointment_id': appointment.id,
-#            })
-#        return rec
+    @api.model
+    def default_get(self, fields):
+        rec = super(SaleOrder, self).default_get(fields)
+        appointment = self.env['calendar.event'].browse(self.env.context.get('active_id'))
+        if self.partner_id not in rec:
+            rec.update({
+                'partner_id': appointment.pet_owner_id,
+                'appointment_id': appointment.id,
+            })
+        return rec
 
 
 class AccountMove(models.Model):
@@ -339,4 +339,3 @@ class InvoiceTransfer(models.Model):
 #                                                                  'immediate_transfer_line_ids':immediate_transfer_line_ids})
 #                     data_id.process()
 #         return res
-
