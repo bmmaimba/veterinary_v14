@@ -19,9 +19,7 @@
     # for the full list
     'category': 'Veterinary',
     'version': '14.4.6',
-    'application': True,
-    'installable': True,
-    'license': 'LGPL-3',
+
     # any module necessary for this one to work correctly
     'depends': ['base','calendar','account','sale','base_automation'],
 

@@ -8,11 +8,8 @@
         <field name="model">account.move</field>
         <field name="inherit_id" ref="account.view_move_form"/>
         <field name="arch" type="xml">
-            <!--<xpath expr="//field[@name='ref']" position="after">
-                <field name="appointment_id" required="1" readonly="1"/>
-            </xpath>-->
-            <xpath expr="//field[@name='payment_reference']" position="after">
-                <field name="appointment_id" required="1" readonly="1"/>
+            <xpath expr="//field[@name='ref']" position="after">
+                <field name="appointment_id"/>
             </xpath>
         </field>
     </record>

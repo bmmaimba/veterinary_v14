@@ -132,14 +132,14 @@ class CalendarEvent(models.Model):
             self.partner_ids = [(6,0, [self.env.user.partner_id.id, self.pet_owner_id.id])]
             #self.pet_owner_id = self.pet_owner_id.id
         
-##    #@api.model
-##    #def create(self, vals):
-##        #if vals.get('pet_owner_id') and vals.get('pet_name_id') and vals.get('today_date'):
-##            #pet_owner_id = self.env['res.partner'].browse(vals.get('pet_owner_id'))
-##            #pet_name_id = self.env['pets'].browse(vals.get('pet_name_id'))
-##        #vals['name'] = "Appointment-" + pet_owner_id.name + "-" + pet_name_id.name + "-" + vals.get('today_date')
-##        #res = super(CalendarEvent, self).create(vals)
-##        #return res
+    #@api.model
+    #def create(self, vals):
+        #if vals.get('pet_owner_id') and vals.get('pet_name_id') and vals.get('today_date'):
+            #pet_owner_id = self.env['res.partner'].browse(vals.get('pet_owner_id'))
+            #pet_name_id = self.env['pets'].browse(vals.get('pet_name_id'))
+        #vals['name'] = "Appointment-" + pet_owner_id.name + "-" + pet_name_id.name + "-" + vals.get('today_date')
+        #res = super(CalendarEvent, self).create(vals)
+        #return res
 
     @api.depends('pet_owner_id', 'prescriptions_count')
     def count_sale_order(self):
@@ -310,19 +310,19 @@ class AccountMove(models.Model):
     appointment_id = fields.Many2one('calendar.event', string='Appointment')
     bill_id = fields.Many2one('sale.order', string='Bill')
 
-#    @api.model
-#    def default_get(self, fields):
-#        rec = super(AccountMove, self).default_get(fields)
-#        appointment = self.env['calendar.event'].browse(self.env.context.get('active_id'))
-#        if self.appointment_id not in rec:
-#            rec.update({
-#                'appointment_id': appointment.id,
-#            })
-#        return rec
+    @api.model
+    def default_get(self, fields):
+        rec = super(AccountMove, self).default_get(fields)
+        appointment = self.env['calendar.event'].browse(self.env.context.get('active_id'))
+        if self.appointment_id not in rec:
+            rec.update({
+                'appointment_id': appointment.id,
+            })
+        return rec
     
-class InvoiceTransfer(models.Model):
-     _inherit = "stock.picking"
-
+# class InvoiceTransfer(models.Model):
+#     _inherit = "stock.picking"
+#
 #     @api.model
 #     def create(self, vals):
 #         res = super(InvoiceTransfer, self).create(vals)
@@ -339,3 +339,4 @@ class InvoiceTransfer(models.Model):
 #                                                                  'immediate_transfer_line_ids':immediate_transfer_line_ids})
 #                     data_id.process()
 #         return res
+
