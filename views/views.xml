@@ -7,7 +7,7 @@
             <field name="model">calendar.event</field>
             <field name="inherit_id" ref="calendar.view_calendar_event_tree"/>
             <field name="arch" type="xml">
-			
+
 			    <xpath expr="//tree" position="attributes">
                     <attribute name="editable">top</attribute>
 	            </xpath>
@@ -27,9 +27,9 @@
                     <field name="breed" readonly="1"/>
                     <field name="sex" readonly="1"/>
                     <field name="tag_ids" widget="many2many_tags" readonly="1"/>
-                    <field name="last_vaccination" readonly="1"/>					    
+                    <field name="last_vaccination" readonly="1"/>
                     <field name="appointment_type"/>
-                    <field name="ailment" attrs="{'invisible': [('appointment_type', '=', 'Vaccination')], 'required': [('appointment_type', '!=', 'Vaccination')]}"/>                            
+                    <field name="ailment" attrs="{'invisible': [('appointment_type', '=', 'Vaccination')], 'required': [('appointment_type', '!=', 'Vaccination')]}"/>
                     <field name="type_of_vacc" attrs="{'invisible': [('appointment_type', '!=', 'Vaccination')], 'required': [('appointment_type', '=', 'Vaccination')]}"/>
 					<field name="vacc_date" attrs="{'invisible': [('appointment_type', '!=', 'Vaccination')], 'required': [('appointment_type', '=', 'Vaccination')]}"/>
                     <field name="user_id" string="Assigned To"/>
@@ -53,8 +53,8 @@
                 </xpath>
             </field>
         </record>
-		
-		
+
+
         <record id="view_calendar_event_form_inherit" model="ir.ui.view">
             <field name="name">calendar.event.kanban.form</field>
             <field name="model">calendar.event</field>
@@ -102,14 +102,14 @@
 
                 <xpath expr="//notebook" position="before">
                     <group>
-                        <group>						    
+                        <group>
                             <field name="appointment_type"/>
 							<field name="vacc_date" attrs="{'invisible': [('appointment_type', '!=', 'Vaccination')], 'required': [('appointment_type', '=', 'Vaccination')]}"/>
 							<field name="hospitalisation_id" attrs="{'invisible': [('appointment_type', '!=', 'Hospitalization')]}"/>
                         </group>
                         <group>
-						    <field name="ailment" attrs="{'invisible': [('appointment_type', '=', 'Vaccination')], 'required': [('appointment_type', '!=', 'Vaccination')]}"/>                            
-                            <field name="type_of_vacc" attrs="{'invisible': [('appointment_type', '!=', 'Vaccination')], 'required': [('appointment_type', '=', 'Vaccination')]}"/>	
+						    <field name="ailment" attrs="{'invisible': [('appointment_type', '=', 'Vaccination')], 'required': [('appointment_type', '!=', 'Vaccination')]}"/>
+                            <field name="type_of_vacc" attrs="{'invisible': [('appointment_type', '!=', 'Vaccination')], 'required': [('appointment_type', '=', 'Vaccination')]}"/>
                             <field name="vaccination_id" attrs="{'invisible': [('appointment_type', '!=', 'Vaccination')]}"/>
                         </group>
                     </group>
@@ -131,7 +131,7 @@
                             <field name="sex" readonly="1"/>
 							<field name="birthdate" readonly="1"/>
                             <field name="last_vaccination" readonly="1"/>
-                            <field name="tag_ids" widget="many2many_tags" readonly="1"/>                            
+                            <field name="tag_ids" widget="many2many_tags" readonly="1"/>
                         </group>
                     </group>
 					<group>
@@ -170,10 +170,10 @@
                         </group>
                     </group>
                     <group>
-                        <group>                            
+                        <group>
                             <field name="plan"/>
                         </group>
-                        <group>                            
+                        <group>
                             <!--<field name="surgical_procedure"/>-->
                         </group>
                     </group>
@@ -468,7 +468,7 @@
             </field>
         </record>
         <!-- actions opening views on models -->
-		
+
 		<!-- Inherit Contact Tags Form View -->
         <record id="view_partner_category_form_inherit" model="ir.ui.view">
             <field name="name">res.partner.category.form.inherit</field>
@@ -480,7 +480,7 @@
                 </xpath>
             </field>
         </record>
-		
+
 		<!-- Inherit Contact Tags Tree View -->
         <record id="view_partner_category_tree_inherit" model="ir.ui.view">
             <field name="name">res.partner.category.tree.inherit</field>
@@ -494,7 +494,7 @@
 				<xpath expr="//field[@name='display_name']" position="replace">
 				    <field name="color"/>
                     <field name="name" required="1"/>
-                    <field name="color_def" required="0"/>				
+                    <field name="color_def" required="0"/>
 					<field name="color_indicator" readonly="1"/>
 					<field name="active"/>
                 </xpath>
@@ -546,33 +546,33 @@
             <field name="view_mode">tree,form</field>
         </record>
 
-        <menuitem name="Veterinary" id="veterinary_odoo_main_menu"/>
-		
+        <menuitem name="Veterinary" id="veterinary_odoo_main_menu" sequence="0"/>
+
         <menuitem name="Appointments" id="veterinary_odoo_sub_menu" parent="veterinary_v14.veterinary_odoo_main_menu"
-                  action="action_appointments" sequence="1"/>		  
-				  
+                  action="action_appointments" sequence="1"/>
+
         <menuitem name="Customer" id="veterinary_odoo_customer_menu" parent="veterinary_v14.veterinary_odoo_main_menu"
                   action="action_customer" sequence="2"/>
-				  
+
         <menuitem name="Bills" id="veterinary_odoo_quotation_menu" parent="veterinary_v14.veterinary_odoo_main_menu"
                   action="action_bill" sequence="5"/>
-				  
+
         <menuitem name="Invoices" id="veterinary_odoo_invoices_menu" parent="veterinary_v14.veterinary_odoo_main_menu"
                   action="action_invoices" sequence="6"/>
-				  
-        <menuitem name="Prescription" id="veterinary_odoo_prescription_menu" parent="veterinary_v14.veterinary_odoo_main_menu" 
+
+        <menuitem name="Prescription" id="veterinary_odoo_prescription_menu" parent="veterinary_v14.veterinary_odoo_main_menu"
 		          action="action_prescription" sequence="7"/>
-				  
+
         <menuitem name="Pets" id="veterinary_odoo_pets_menu" parent="veterinary_v14.veterinary_odoo_main_menu"
                   action="action_pets" sequence="8"/>
-				  		  
+
         <menuitem name="Configuration" id="veterinary_odoo_sub_menu_config"
                   parent="veterinary_v14.veterinary_odoo_main_menu" sequence="9"/>
-				  
+
         <menuitem name="Appointment Stages" id="veterinary_odoo_menu_appointment_stages"
                   parent="veterinary_v14.veterinary_odoo_sub_menu_config" action="action_appointment_stages"
                   sequence="1"/>
-				  				  
+
         <!--account.action_move_out_invoice_type-->
     </data>
 </odoo>

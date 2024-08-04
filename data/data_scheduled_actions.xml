@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- https://www.odoo.com/documentation/14.0/howtos/backend.html -->
+<odoo>
+      <data>
+
+        <record id="_ir_cron_copy_grower_details_to_plot_records" model="ir.cron">
+            <field name="active" eval="True"/>
+            <field name="name">Scheduled Action: Copy Grower Details to Plot Records</field>
+            <field name="model_id" ref="model_res_partner"/>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">10</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <!--<field name="nextcall" eval="(datetime.now() + timedelta(days=10)).strftime('%Y-%m-%d 23:59:59')"/>--> <!--Dynamic-->
+            <field name="priority">1</field>
+            <field name="doall" eval="False"/>
+            <field name="code">model.copy_grower_fields_to_plot_cron_scheduler()</field>
+        </record>
+
+      </data>
+</odoo>

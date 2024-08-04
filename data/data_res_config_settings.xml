@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- https://gist.github.com/3mrdev/890ccd3b637db743d58ba9e1f1e7a4d5 -->
+
+<odoo>
+
+<!---<record id="res_config_settings_view_form_firebits" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.firebits</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="25"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="your_module" string="your_module" data-key="your_module" groups="base.group_erp_manager">
+                    <h2>Title of configuration</h2>
+                    <div class="row mt16 o_settings_container" name="title_setting_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="_your_field"/>
+                                <div class="text-muted">
+                                    Your filed description
+                                </div>
+                                <field name="_your_field"/>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="_your_field"/>
+                                <div class="text-muted">
+                                    Your filed description
+                                </div>
+                                <field name="_your_field"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_your_module_configuration" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'your_module'}</field>
+    </record>
+
+    <menuitem id="menu_your_module_general_settings" name="Settings" parent="config_menu"
+        sequence="0" action="action_your_module_configuration" groups="base.group_erp_manager"/>
+-->
+
+</odoo>

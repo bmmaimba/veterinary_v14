@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- https://www.odoo.com/documentation/14.0/howtos/backend.html -->
+<odoo>
+    <data noupdate="0">
+        <record id="view_module_filter_inherit_veterinary" model="ir.ui.view">
+            <field name="name">ir.module.module.list.select.inherit.veterinary</field>
+            <field name="model">ir.module.module</field>
+            <field name="inherit_id" ref="base.view_module_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="inside">
+                    <filter name="veterinary" string="veterinary" domain="[('name', 'ilike', 'veterinary')]"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="base.open_module_tree">
+            <field name="context" eval="{'search_default_app':1, 'search_default_veterinary':1}" />
+        </record>
+
+        <!-- <record model="ir.ui.view" id="view_module_filter_apps_inherit">
+            <field name="name">Search Data Modules</field>
+            <field name="model">ir.module.module</field>
+            <field name="inherit_id" ref="base.view_module_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//searchpanel/field[@name='category_id']" position="before">
+                    <field name="module_type" string="Apps" expand="1"/>
+                </xpath>
+            </field>
+        </record> -->
+
+        <!-- Click on a category -->
+        <!-- <record id="view_module_filter" model="ir.ui.view">
+            <field name="name">ir.module.module.list.select</field>
+            <field name="model">ir.module.module</field>
+            <field name="arch" type="xml">
+                <search string="Search modules">
+                    <field name="name" filter_domain="['|', '|', ('summary', 'ilike', self), ('shortdesc', 'ilike', self), ('name','ilike', self)]" string="Module"/>
+                    <filter name="app" string="Apps" domain="[('application', '=', True)]"/>
+                    <filter name="extra" string="Extra" domain="[('application', '=', False)]"/>
+                    <separator/>
+                    <filter name="installed" string="Installed" domain="[('state', 'in', ['installed', 'to upgrade', 'to remove'])]"/>
+                    <filter name="not_installed" string="Not Installed" domain="[('state', 'in', ['uninstalled', 'uninstallable', 'to install'])]"/>
+                    <field name="category_id"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Author" name="author" domain="[]" context="{'group_by':'author'}"/>
+                        <filter string="Category" name="category" domain="[]" context="{'group_by':'category_id'}"/>
+                        <filter string="Status" name="state" domain="[]" context="{'group_by':'state'}"/>
+                    </group>
+                    <searchpanel>
+                        <field name="category_id" string="Categories" enable_counters="1"/>
+                    </searchpanel>
+               </search>
+            </field>
+        </record> -->
+
+        <!-- <record id="open_module_tree" model="ir.actions.act_window">
+            <field name="name">Apps</field>
+            <field name="res_model">ir.module.module</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="context">{'search_default_app':1}</field>
+            <field name="search_view_id" ref="view_module_filter"/>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_empty_folder">
+                No module found!
+              </p><p>
+                You should try other search criteria.
+              </p>
+            </field>
+        </record> -->
+
+        <!-- https://shop.vitraining.com/blog/our-blog-1/post/how-can-i-update-a-record-stored-with-the-attribute-noupdate-1-31 -->
+        <!-- https://www.odoo.com/pl_PL/forum/pomoc-1/how-can-i-update-a-record-stored-with-the-attribute-noupdate-1-78133 -->
+        <!-- https://www.odoo.com/pl_PL/forum/pomoc-1/how-override-base-record-rule-in-custom-module-148347 -->
+        <!-- https://www.linkedin.com/pulse/odoo-how-override-noupdate1-mohamed-sharaf/ -->
+        <!-- https://www.cybrosys.com/blog/modify-existing-record-rules-in-odoo -->
+
+        <!-- Allow updating on noupdate=True records -->
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value
+                    eval="[('module', '=', 'base'), ('name', '=', 'main_company')]" />
+            </function>
+            <value eval="{'noupdate': False}" />
+        </function>
+
+        <!-- DO NOT DELETE -->
+        <!-- Revoke noupdate change -->
+        <!-- <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value
+                    eval="[('module', '=', 'base'), ('name', '=', 'main_company')]" />
+            </function>
+            <value eval="{'noupdate': True}" />
+        </function> -->
+
+        <record id="base.main_company" model="res.company">
+            <field name="name">Kamfinsa Veterinary Surgery</field>
+            <field name="phone">+263 77 231 2896</field>
+            <field name="email"></field>
+            <field name="website">https://www.facebook.com/kamfinsa24hrvet/</field>
+            <field name="street">20 Court Road</field>
+            <field name="street2">Greendale</field>
+            <field name="city">Harare</field>
+            <field name="zip"></field>
+            <field name="currency_id" ref="base.USD"/>
+            <field name="country_id" ref="base.zw"/>
+            <!-- <field name="state_id" ref="base.state_za_lp"/> -->
+            <field name="logo" type="base64" file="veterinary_v14/static/src/img/logo.jpg"/>
+            <field name="logo_web" type="base64" file="veterinary_v14/static/src/img/logo.jpg"/>
+        </record>
+
+        <!-- THIS WILL UPDATE EXISTING RECORD - Function to change  invitation_scope / auth_signup_uninvited from b2c to b2b i.e from "Free sign up" to "On Invitation" -->
+        <function model="ir.config_parameter" name="set_param" eval="('auth_signup.invitation_scope', 'b2b')"/>
+
+        <!-- THIS WILL CREATE A NEW RECORD - Function to change  invitation_scope / auth_signup_uninvited from b2c to b2b i.e from "Free sign up" to "On Invitation" -->
+        <!-- <record id="auth_signup_invitation_scope_b2b" model="ir.config_parameter">
+            <field name="key">auth_signup.invitation_scope</field>
+            <field name="value">b2b</field>
+        </record> -->
+
+    </data>
+</odoo>

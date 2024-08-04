@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- https://www.odoo.com/documentation/14.0/howtos/backend.html -->
+<odoo>
+      <data>
+
+        <record model="account.tax" id="gvt_tax_5_percent">
+            <field name="name">Gvt 5.00%</field>
+            <field name="amount_type">percent</field>
+            <field name="active" eval="True"/>
+            <field name="type_tax_use">sale</field>
+            <field name="amount">5</field>
+            <field name="description">Gvt 5.00%</field>
+            <field name="invoice_repartition_line_ids" 
+                  eval="[(5, 0, 0),
+                    (0,0, {'factor_percent': '', 'repartition_type': 'base'}),
+                    (0,0, {'factor_percent': 100, 'repartition_type': 'tax', 'account_id': ref('l10n_generic_coa.1_tax_received')})]"/>
+            <field name="refund_repartition_line_ids" 
+                  eval="[(5, 0, 0),
+                    (0,0, {'factor_percent': '', 'repartition_type': 'base'}),
+                    (0,0, {'factor_percent': 100, 'repartition_type': 'tax', 'account_id': ref('l10n_generic_coa.1_tax_received')})]"/>
+        </record>
+        
+        <record model="account.tax" id="statutory_tax_zero_point_5_percent">
+            <field name="name">Stautory 0.005%</field>
+            <field name="amount_type">percent</field>
+            <field name="active" eval="True"/>
+            <field name="type_tax_use">sale</field>
+            <field name="amount">0.005</field>
+            <field name="description">Stautory 0.005%</field>
+            <field name="invoice_repartition_line_ids" 
+                  eval="[(5, 0, 0),
+                    (0,0, {'factor_percent': '', 'repartition_type': 'base'}),
+                    (0,0, {'factor_percent': 100, 'repartition_type': 'tax', 'account_id': ref('l10n_generic_coa.1_tax_received')})]"/>
+            <field name="refund_repartition_line_ids" 
+                  eval="[(5, 0, 0),
+                    (0,0, {'factor_percent': '', 'repartition_type': 'base'}),
+                    (0,0, {'factor_percent': 100, 'repartition_type': 'tax', 'account_id': ref('l10n_generic_coa.1_tax_received')})]"/>
+        </record>
+
+      </data>
+</odoo>

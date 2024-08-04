@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- https://www.odoo.com/documentation/14.0/howtos/backend.html -->
+<odoo>
+      <data>
+
+        <!-- Allow updating on noupdate=True records -->
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value
+                    eval="[('module', '=', 'base'), ('name', '=', 'USD')]" />
+            </function>
+            <value eval="{'noupdate': False}" />
+        </function>
+
+        <!-- DO NOT DELETE -->
+        <!-- Revoke noupdate change -->
+        <!-- <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value
+                    eval="[('module', '=', 'base'), ('name', '=', 'USD')]" />
+            </function>
+            <value eval="{'noupdate': True}" />
+        </function> -->
+
+        <record id="base.USD" model="res.currency">
+            <field name="active" eval="True"/>
+            <!-- <field name="l10n_mx_edi_decimal_places">2</field> -->
+        </record>
+
+      </data>
+</odoo>

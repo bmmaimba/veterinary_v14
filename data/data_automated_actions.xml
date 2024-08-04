@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- https://www.odoo.com/documentation/14.0/howtos/backend.html -->
+<odoo>
+    <data>
+
+		<record id="color_coding_for_contact_tags" model="base.automation">
+			<field name="name">Color Coding for Contact Tags</field>
+			<!--<field name="active">1</field>-->
+			<field name="active" eval="True"/>
+			<!--<field name="model_id" ref="sale.model_sale_order"/>-->
+			<field name="model_id" ref="model_res_partner_category"/>
+			<!--<field name="state" ref="code"/>-->
+			<field name="state">code</field>
+			<!--<field name="trigger" ref="on_create_or_write"/>-->
+			<field name="trigger">on_create_or_write</field>
+			<field name="code">
+if record.color_def == 'Red1':
+  record['color'] = 1
+if record.color_def == 'Orange2':
+  record['color'] = 2
+if record.color_def == 'Yellow3':
+  record['color'] = 3
+if record.color_def == 'LightBlue4':
+  record['color'] = 4
+if record.color_def == 'DarkPurple5':
+  record['color'] = 5
+if record.color_def == 'SalmonPink6':
+  record['color'] = 6
+if record.color_def == 'MediumBlue7':
+  record['color'] = 7
+if record.color_def == 'DarkBlue8':
+  record['color'] = 8
+if record.color_def == 'Fushia9':
+  record['color'] = 9
+if record.color_def == 'Green10':
+  record['color'] = 10
+if record.color_def == 'Purple11':
+  record['color'] = 11
+
+if record.color == 1:
+  record['color_def'] = 'Red1'
+if record.color == 2:
+  record['color_def'] = 'Orange2'
+if record.color == 3:
+  record['color_def'] = 'Yellow3'
+if record.color == 4:
+  record['color_def'] = 'LightBlue4'
+if record.color == 5:
+  record['color_def'] = 'DarkPurple5'
+if record.color == 6:
+  record['color_def'] = 'SalmonPink6'
+if record.color == 7:
+  record['color_def'] = 'MediumBlue7'
+if record.color == 8:
+  record['color_def'] = 'DarkBlue8'
+if record.color == 9:
+  record['color_def'] = 'Fushia9'
+if record.color == 10:
+  record['color_def'] = 'Green10'
+if record.color == 11:
+  record['color_def'] = 'Purple11'
+			</field>
+		</record>
+
+		<record id="appointment_name" model="base.automation">
+			<field name="name">Appointment - Name</field>
+			<!--<field name="active">1</field>-->
+			<field name="active" eval="True"/>
+			<!--<field name="model_id" ref="sale.model_sale_order"/>-->
+			<field name="model_id" ref="model_calendar_event"/>
+			<!--<field name="state" ref="code"/>-->
+			<field name="state">code</field>
+			<!--<field name="trigger" ref="on_create_or_write"/>-->
+			<field name="trigger">on_create_or_write</field>
+			<field name="code">record['name'] = 'Appointment - ' + record.start_date.strftime('%Y-%m-%d') +  ' - ' + record.pet_name_id.name + ' - ' + record.pet_owner_id.name</field>
+		</record>
+
+		<record id="vaccination_upd_pet_last_vacc_date" model="base.automation">
+			<field name="name">Vaccination - Update Pets Last Vaccination Date Based on the Vaccination Records</field>
+			<!--<field name="active">1</field>-->
+			<field name="active" eval="True"/>
+			<!--<field name="model_id" ref="sale.model_sale_order"/>-->
+			<field name="model_id" ref="model_vaccinations"/>
+			<!--<field name="state" ref="code"/>-->
+			<field name="state">code</field>
+			<!--<field name="trigger" ref="on_create_or_write"/>-->
+			<field name="trigger">on_create_or_write</field>
+			<field name="code">
+for record in records:
+  #if record.stage == 'Done':
+  record.pet_name_id.write({'last_vaccination': record.date})</field>
+		</record>
+
+		<record id="vaccination_upd_vacc_stage_to_done" model="base.automation">
+			<field name="name">Vaccination - Update Vaccination Stage => Done, When the Appointment Stage = Done</field>
+			<!--<field name="active">1</field>-->
+			<field name="active" eval="True"/>
+			<!--<field name="model_id" ref="sale.model_sale_order"/>-->
+			<field name="model_id" ref="model_calendar_event"/>
+			<!--<field name="state" ref="code"/>-->
+			<field name="state">code</field>
+			<!--<field name="trigger" ref="on_create_or_write"/>-->
+			<field name="trigger">on_create_or_write</field>
+			<!--<field name="trigger_field_ids">calendar.event.stage_id</field>-->
+			<!--<field name="trigger_field_ids" ref="calendar.event.stage_id">-->
+			<!--<field name="trigger_field_ids" ref="model_calendar_event.stage_id">-->
+			<!--<field name="trigger_field_ids">calendar.model_calendar_event.stage_id</field>-->
+			<!--<field name="trigger_field_ids">calendar.calendar_event.stage_id</field>-->
+			<!--<field name="server_action_ids" eval="[(6,0,[ref('ir_actions_server_schedule_emails')])]"/>-->
+			<!--<field name="trigger_field_ids" eval="[(6,0,[ref('model_calendar_event_stage_id')])]"/>-->
+			<!--<field name="trigger_field_ids" eval="[(6,0,[ref('ir_model_fields_stage_id')])]"/>-->
+			<field name="code">
+for record in records:
+  if record.stage_id.id == 5:
+    record.vaccination_id.write({'stage': 'Done'})</field>
+		</record>
+
+    </data>
+</odoo>
