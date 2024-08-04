@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- https://www.odoo.com/documentation/14.0/howtos/backend.html -->
+<odoo>
+    <data noupdate="0">
+
+        <record id="res_partner_benjamin_maimba" model="res.partner" forcecreate="False">
+            <field name="name">Benjamin(Partner)</field>
+            <field name="ref">9312175800184</field>
+            <field name="email">bmaimba@gmail.com</field>
+            <field name="active" eval="True"/>
+            <field name="company_type">person</field>
+        </record>
+
+	</data>
+</odoo>

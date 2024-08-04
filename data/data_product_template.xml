@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- https://www.odoo.com/documentation/14.0/howtos/backend.html -->
+<odoo>
+      <data>
+
+        <!--https://openerp-server.readthedocs.io/en/latest/03_module_dev_04.html-->
+        <record model="ir.actions.act_window" id="sale.product_template_action">
+            <field name="view_mode">tree,kanban,form,activity</field>
+            <field name="view_id" ref="product.product_template_tree_view"/>
+        </record>
+
+        <record model="product.template" id="FeeT1">
+            <field name="name">School Fees - Term 1</field>
+            <field name="type">service</field>
+            <field name="sale_ok">1</field>
+            <field name="purchase_ok">0</field>
+            <field name="recurring_invoice">0</field>
+            <field name="list_price">2500</field>
+            <!--<field name="taxes_id" eval="[(5, 0, 0)]" />--> <!--"removing/unset taxes"-->
+            <!-- <field name="taxes_id" eval="[(5, 0, 0),(6, 0, [ref('account.1_ST2')])]"/> -->
+            <field name="taxes_id" eval="[(5, 0, 0)]" />
+            <field name="supplier_taxes_id" eval="[(5, 0, 0)]" />
+            <field name="default_code">FeeT1</field>
+            <!-- <field name="subscription_template_id" ref="sale_subscription.yearly_subscription"/> -->
+            <field name="sale_line_warn">no-message</field>
+        </record>
+
+        <record model="product.template" id="FeeT1_Recurring">
+            <field name="name">School Fees - Term 1 - Recurring</field>
+            <field name="type">service</field>
+            <field name="sale_ok">1</field>
+            <field name="purchase_ok">0</field>
+            <field name="recurring_invoice">1</field>
+            <field name="list_price">2500</field>
+            <!--<field name="taxes_id" eval="[(5, 0, 0)]" />--> <!--"removing/unset taxes"-->
+            <!-- <field name="taxes_id" eval="[(5, 0, 0),(6, 0, [ref('account.1_ST2')])]"/> -->
+            <field name="taxes_id" eval="[(5, 0, 0)]" />
+            <field name="supplier_taxes_id" eval="[(5, 0, 0)]" />
+            <field name="default_code">FeeT1Rec</field>
+            <!-- <field name="subscription_template_id" ref="sale_subscription.yearly_subscription"/> -->
+            <field name="sale_line_warn">no-message</field>
+        </record>
+
+        <record model="product.template" id="FeeT2">
+            <field name="name">School Fees - Term 2</field>
+            <field name="type">service</field>
+            <field name="sale_ok">1</field>
+            <field name="purchase_ok">0</field>
+            <field name="recurring_invoice">0</field>
+            <field name="list_price">2750</field>
+            <!--<field name="taxes_id" eval="[(5, 0, 0)]" />--> <!--"removing/unset taxes"-->
+            <!-- <field name="taxes_id" eval="[(5, 0, 0),(6, 0, [ref('account.1_ST2')])]"/> -->
+            <field name="taxes_id" eval="[(5, 0, 0)]" />
+            <field name="supplier_taxes_id" eval="[(5, 0, 0)]" />
+            <field name="default_code">FeeT2</field>
+            <!-- <field name="subscription_template_id" ref="sale_subscription.yearly_subscription"/> -->
+            <field name="sale_line_warn">no-message</field>
+        </record>
+
+        <record model="product.template" id="FeeT2_Recurring">
+            <field name="name">School Fees - Term 2 - Recurring</field>
+            <field name="type">service</field>
+            <field name="sale_ok">1</field>
+            <field name="purchase_ok">0</field>
+            <field name="recurring_invoice">1</field>
+            <field name="list_price">2750</field>
+            <!--<field name="taxes_id" eval="[(5, 0, 0)]" />--> <!--"removing/unset taxes"-->
+            <!-- <field name="taxes_id" eval="[(5, 0, 0),(6, 0, [ref('account.1_ST2')])]"/> -->
+            <field name="taxes_id" eval="[(5, 0, 0)]" />
+            <field name="supplier_taxes_id" eval="[(5, 0, 0)]" />
+            <field name="default_code">FeeT2Rec</field>
+            <!-- <field name="subscription_template_id" ref="sale_subscription.yearly_subscription"/> -->
+            <field name="sale_line_warn">no-message</field>
+        </record>
+
+        <record model="product.template" id="FeeT3">
+            <field name="name">School Fees - Term 3</field>
+            <field name="type">service</field>
+            <field name="sale_ok">1</field>
+            <field name="purchase_ok">0</field>
+            <field name="recurring_invoice">1</field>
+            <field name="list_price">3050</field>
+            <!--<field name="taxes_id" eval="[(5, 0, 0)]" />--> <!--"removing/unset taxes"-->
+            <!-- <field name="taxes_id" eval="[(5, 0, 0),(6, 0, [ref('account.1_ST2')])]"/> -->
+            <field name="taxes_id" eval="[(5, 0, 0)]" />
+            <field name="supplier_taxes_id" eval="[(5, 0, 0)]" />
+            <field name="default_code">FeeT3</field>
+            <!-- <field name="subscription_template_id" ref="sale_subscription.yearly_subscription"/> -->
+            <field name="sale_line_warn">no-message</field>
+        </record>
+
+        <record model="product.template" id="FeeT3_Recurring">
+            <field name="name">School Fees - Term 3 - Recurring</field>
+            <field name="type">service</field>
+            <field name="sale_ok">1</field>
+            <field name="purchase_ok">0</field>
+            <field name="recurring_invoice">1</field>
+            <field name="list_price">3050</field>
+            <!--<field name="taxes_id" eval="[(5, 0, 0)]" />--> <!--"removing/unset taxes"-->
+            <!-- <field name="taxes_id" eval="[(5, 0, 0),(6, 0, [ref('account.1_ST2')])]"/> -->
+            <field name="taxes_id" eval="[(5, 0, 0)]" />
+            <field name="supplier_taxes_id" eval="[(5, 0, 0)]" />
+            <field name="default_code">FeeT3Rec</field>
+            <!-- <field name="subscription_template_id" ref="sale_subscription.yearly_subscription"/> -->
+            <field name="sale_line_warn">no-message</field>
+        </record>
+
+      </data>
+</odoo>

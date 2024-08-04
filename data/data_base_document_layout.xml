@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- https://www.odoo.com/documentation/14.0/howtos/backend.html -->
+<odoo>
+    <data noupdate="0">
+        <record id="default_base_document_layout" model="base.document.layout">
+            <field name="report_layout_id" ref="web.report_layout_boxed"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- https://www.odoo.com/documentation/14.0/howtos/backend.html -->
+<odoo>
+    <data noupdate="0">
+
+        <!-- https://shop.vitraining.com/blog/our-blog-1/post/how-can-i-update-a-record-stored-with-the-attribute-noupdate-1-31 -->
+        <!-- https://www.odoo.com/pl_PL/forum/pomoc-1/how-can-i-update-a-record-stored-with-the-attribute-noupdate-1-78133 -->
+        <!-- https://www.odoo.com/pl_PL/forum/pomoc-1/how-override-base-record-rule-in-custom-module-148347 -->
+        <!-- https://www.linkedin.com/pulse/odoo-how-override-noupdate1-mohamed-sharaf/ -->
+        <!-- https://www.cybrosys.com/blog/modify-existing-record-rules-in-odoo -->
+
+        <!-- <function name="write" model="ir.model.data">
+            <value model="ir.model.data" search="[('module', '=', 'digest'), ('name', '=', 'digest_digest_default')]"/>
+            <value eval="{'noupdate': False}"/>
+        </function> -->
+
+        <!-- DO NOT DELETE -->
+        <!-- Revoke noupdate change -->
+        <!-- <function name="write" model="ir.model.data">
+            <value model="ir.model.data" search="[('module', '=', 'digest'), ('name', '=', 'digest_digest_default')]"/>
+            <value eval="{'noupdate': True}"/>
+        </function> -->
+
+        <!-- Allow updating on noupdate=True records -->
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value
+                    eval="[('module', '=', 'digest'), ('name', '=', 'digest_digest_default')]" />
+            </function>
+            <value eval="{'noupdate': False}" />
+        </function>
+
+        <!-- DO NOT DELETE -->
+        <!-- Revoke noupdate change -->
+        <!-- <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value
+                    eval="[('module', '=', 'digest.digest'), ('name', '=', 'digest_digest_default')]" />
+            </function>
+            <value eval="{'noupdate': True}" />
+        </function> -->
+
+        <!-- Disable Digest Emails -->
+        <!-- THIS WILL UPDATE EXISTING RECORD - Function to change / set default_digest_emails to False (Deactivate) -->
+        <function model="ir.config_parameter" name="set_param" eval="('digest.default_digest_emails', False)"/>
+
+        <!-- THIS WILL UPDATE EXISTING RECORD- Function to change / set default_digest_emails to deactivated -->
+        <record id="digest.digest_digest_default" model="digest.digest">
+            <field name="state">deactivated</field>
+            <field name="periodicity">quarterly</field>
+        </record>
+
+        <!-- <record id="digest.digest_digest_default" model="ir.rule">
+            <field name="groups" eval="[Command.set([ref('base.group_system')])]"/>
+        </record> -->
+
+    </data>
+</odoo>

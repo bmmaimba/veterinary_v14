@@ -28,7 +28,6 @@
 
     # always loaded
     'data': [
-        'security/ir.model.access.csv',
         'views/views.xml',
         'views/templates.xml',
         'views/customer_view.xml',
@@ -36,7 +35,13 @@
         'views/invoice_view.xml',
         'views/vaccinations.xml',
         'views/hospitalisations.xml',
-        'views/automated_actions.xml',
+        'data/data_res_users.xml',
+        'data/data_res_company.xml',
+        'data/data_res_currency.xml',
+        'data/data_res_partner.xml',
+        'data/data_automated_actions.xml',
+        'data/data_powered_by_brand_promotion_login.xml',
+        'security/ir.model.access.csv',
     ],
     # only loaded in demonstration mode
     'demo': [

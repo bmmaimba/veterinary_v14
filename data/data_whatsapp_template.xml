@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- https://www.odoo.com/documentation/14.0/howtos/backend.html -->
+<odoo>
+      <data>
+
+      <!-- Allow updating on noupdate=True records -->
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value
+                    eval="[('module', '=', 'whatsapp_payment'), ('name', '=', 'whatsapp_template_payment_link')]" />
+            </function>
+            <value eval="{'noupdate': False}" />
+        </function>
+
+        <!-- DO NOT DELETE -->
+        <!-- Revoke noupdate change -->
+        <!-- <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value
+                    eval="[('module', '=', 'whatsapp_payment'), ('name', '=', 'whatsapp_template_payment_link')]" />
+            </function>
+            <value eval="{'noupdate': True}" />
+        </function> -->
+
+        <record model="whatsapp.template" id="whatsapp_payment.whatsapp_template_payment_link">
+            <field name="status">approved</field>
+        </record>
+
+
+      <!-- Allow updating on noupdate=True records -->
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value
+                    eval="[('module', '=', 'whatsapp_account'), ('name', '=', 'whatsapp_template_payment_receipt')]" />
+            </function>
+            <value eval="{'noupdate': False}" />
+        </function>
+
+        <!-- DO NOT DELETE -->
+        <!-- Revoke noupdate change -->
+        <!-- <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value
+                    eval="[('module', '=', 'whatsapp_account'), ('name', '=', 'whatsapp_template_payment_receipt')]" />
+            </function>
+            <value eval="{'noupdate': True}" />
+        </function> -->
+
+        <record model="whatsapp.template" id="whatsapp_account.whatsapp_template_payment_receipt">
+            <field name="status">approved</field>
+        </record>
+
+
+      <!-- Allow updating on noupdate=True records -->
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value
+                    eval="[('module', '=', 'whatsapp_account'), ('name', '=', 'whatsapp_template_invoice')]" />
+            </function>
+            <value eval="{'noupdate': False}" />
+        </function>
+
+        <!-- DO NOT DELETE -->
+        <!-- Revoke noupdate change -->
+        <!-- <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value
+                    eval="[('module', '=', 'whatsapp_account'), ('name', '=', 'whatsapp_template_invoice')]" />
+            </function>
+            <value eval="{'noupdate': True}" />
+        </function> -->
+
+        <record model="whatsapp.template" id="whatsapp_account.whatsapp_template_invoice">
+            <field name="status">approved</field>
+        </record>
+
+
+      <!-- Allow updating on noupdate=True records -->
+        <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value
+                    eval="[('module', '=', 'whatsapp_sale'), ('name', '=', 'whatsapp_template_sale_order')]" />
+            </function>
+            <value eval="{'noupdate': False}" />
+        </function>
+
+        <!-- DO NOT DELETE -->
+        <!-- Revoke noupdate change -->
+        <!-- <function name="write" model="ir.model.data">
+            <function name="search" model="ir.model.data">
+                <value
+                    eval="[('module', '=', 'whatsapp_sale'), ('name', '=', 'whatsapp_template_sale_order')]" />
+            </function>
+            <value eval="{'noupdate': True}" />
+        </function> -->
+
+        <record model="whatsapp.template" id="whatsapp_sale.whatsapp_template_sale_order">
+            <field name="status">approved</field>
+        </record>
+
+      </data>
+</odoo>
