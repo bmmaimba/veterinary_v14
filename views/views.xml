@@ -66,9 +66,9 @@
                     </header>
                 </xpath>
                 <xpath expr="//sheet//div[@name='button_box']" position="inside">
-                    <button class="oe_stat_button" type="object" name="view_sale" icon="fa-usd">
+                    <!-- <button class="oe_stat_button" type="object" name="view_sale" icon="fa-usd">
                         <field string="Quotation/Bills" name="sale_order_count" widget="statinfo"/>
-                    </button>
+                    </button> -->
                     <button class="oe_stat_button" type="object" name="view_invoice" icon="fa-pencil-square-o">
                         <field string="Invoices" name="invoice_count" widget="statinfo"/>
                     </button>
@@ -198,14 +198,14 @@
 
                 <xpath expr="//page[@name='page_details']" position="before">
 
-                    <page string="Bills" name="bills">
+                    <!-- <page string="Bills" name="bills">
                         <field name="bill_ids">
                         </field>
-                    </page>
+                    </page> -->
 
                     <page string="Invoice" name="invoice" groups="base.group_no_one">
                         <field name="invoice_ids">
-                            <tree string="Invoice" editable="top" create="false" delete="false">
+                            <tree string="Invoice" editable="top" create="true" delete="false">
                                 <field name="name"/>
                                 <field name="invoice_date_due"/>
                                 <field name="amount_total_signed"/>
@@ -554,11 +554,11 @@
         <menuitem name="Customer" id="veterinary_odoo_customer_menu" parent="veterinary_v14.veterinary_odoo_main_menu"
                   action="action_customer" sequence="2"/>
 
-        <menuitem name="Bills" id="veterinary_odoo_quotation_menu" parent="veterinary_v14.veterinary_odoo_main_menu"
-                  action="action_bill" sequence="5"/>
+        <!-- <menuitem name="Bills" id="veterinary_odoo_quotation_menu" parent="veterinary_v14.veterinary_odoo_main_menu"
+                  action="action_bill" sequence="5"/> -->
 
         <menuitem name="Invoices" id="veterinary_odoo_invoices_menu" parent="veterinary_v14.veterinary_odoo_main_menu"
-                  action="action_invoices" sequence="6"/>
+                  action="account.action_move_out_invoice_type" sequence="6"/>
 
         <menuitem name="Prescription" id="veterinary_odoo_prescription_menu" parent="veterinary_v14.veterinary_odoo_main_menu"
 		          action="action_prescription" sequence="7"/>

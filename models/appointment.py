@@ -18,7 +18,7 @@ from urllib.request import urlopen
 
 class CalendarEvent(models.Model):
     _inherit = "calendar.event"
-    
+
     name = fields.Char(string="Appointment Name", required=False, readonly=True )
     stage_id = fields.Many2one('appointment.stages', group_expand="_read_group_stage_ids", string="Stage")
     kanban_state = fields.Selection([('inprogress', 'In Progress'), ('done', 'Ready'), ('blocked', 'Blocked')], string="Kanban State")
@@ -102,17 +102,17 @@ class CalendarEvent(models.Model):
     bloods = fields.Binary(string="Bloods")
     reason_for_admission = fields.Text(string="Reason for Admission")
     #assignted_to = fields.Many2one("res.users", string="Assigned To")
-    
+
     appointment_type = fields.Selection([('Vaccination', 'Vaccination'), ('Hospitalization', 'Hospitalization'),
                              ('Other', 'Other')
                              ], string="Appointment Type", required=True)
-    type_of_vacc = fields.Selection([('Rabies', 'Rabies'), ('3in1', '3in1'), ('3in1Rabies', '3in1 & Rabies'), 
+    type_of_vacc = fields.Selection([('Rabies', 'Rabies'), ('3in1', '3in1'), ('3in1Rabies', '3in1 & Rabies'),
                                      ('5in1', '5in1'), ('5in1Rabies', '5in1 & Rabies'), ('Leukemia', 'Leukemia')
                                     ], string="Type of Vaccination")
     vacc_date = fields.Date(string="Vaccination Date", default=datetime.today())
-    vaccination_id = fields.Many2one("vaccinations", string="Vaccination Record", readonly=True)  
-    
-    hospitalisation_id = fields.Many2one("hospitalisations", string="Hospitalisations Record", readonly=True) 
+    vaccination_id = fields.Many2one("vaccinations", string="Vaccination Record", readonly=True)
+
+    hospitalisation_id = fields.Many2one("hospitalisations", string="Hospitalisations Record", readonly=True)
 
     def open_vet_form(self):
         return {
@@ -131,7 +131,7 @@ class CalendarEvent(models.Model):
         if self.pet_owner_id:
             self.partner_ids = [(6,0, [self.env.user.partner_id.id, self.pet_owner_id.id])]
             #self.pet_owner_id = self.pet_owner_id.id
-        
+
     #@api.model
     #def create(self, vals):
         #if vals.get('pet_owner_id') and vals.get('pet_name_id') and vals.get('today_date'):
@@ -181,17 +181,43 @@ class CalendarEvent(models.Model):
         }
         return action
 
+    # def view_invoice(self):
+    #     context = {}
+    #     context.update(create=True)
+    #     action = {
+    #         'name': _('View Invoice'),
+    #         'domain': [('appointment_id', '=', self.id)],
+    #         'context': context,
+    #         'view_mode': 'tree,form',
+    #         'res_model': 'account.move',
+    #         'type': 'ir.actions.act_window',
+    #     }
+    #     return action
+
     def view_invoice(self):
-        context = {}
-        context.update(create=False)
-        action = {
-            'name': _('View Invoice'),
-            'domain': [('appointment_id', '=', self.id)],
-            'context': context,
-            'view_mode': 'tree,form',
-            'res_model': 'account.move',
-            'type': 'ir.actions.act_window',
+        context = {
+            'default_move_type': 'out_invoice',
+            'default_partner_id': self.pet_owner_id.id,
+            'default_appointment_id': self.id,
+            'default_payment_reference': self.name,
+            'default_ref': self.name,
+            'default_invoice_date': self.create_date,
+            'default_invoice_date_due': self.create_date,
+            'default_invoice_payment_term_id': self.env['account.payment.term'].search([('name','=','Immediate Payment')]).id,
+            'default_auto_post': True,
         }
+        context.update(create=True)
+        action = self.env.ref('account.action_move_out_invoice_type').read()[0]
+        action.update({
+            'type': 'ir.actions.act_window',
+            'name': _('View Invoice'),
+            'res_model': 'account.move',
+            'domain': [('move_type', '=', 'out_invoice'),('appointment_id', '=', self.id)],
+            'context': context,
+            'view_id': self.env.ref('account.view_out_invoice_tree').id,
+            'search_view_id': self.env.ref('account.view_account_invoice_filter').id,
+            'view_mode': 'tree,kanban,form',
+        })
         return action
 
     def view_prescription(self):
@@ -203,7 +229,7 @@ class CalendarEvent(models.Model):
             'type': 'ir.actions.act_window',
         }
         return action
-    
+
     def write(self, vals):
         if vals.get('pet_owner_id'):
             owner_id = self.env['res.partner'].browse(vals.get('pet_owner_id'))
@@ -221,13 +247,13 @@ class CalendarEvent(models.Model):
     def default_get(self, fields):
         fields.append('pet_owner_id')
         return super(CalendarEvent, self).default_get(fields)
-        
+
 class ContactTags(models.Model):
     _inherit = "res.partner.category"
-    
+
     color_indicator = fields.Char(string="Indicator")
     color_def = fields.Selection([('Red1', 'Red1'), ('Orange2', 'Orange2'), ('Yellow3', 'Yellow3'), ('LightBlue4', 'Light Blue4'),
-                                  ('DarkPurple5', 'Dark Purple5'), ('SalmonPink6', 'Salmon Pink6'), ('MediumBlue7', 'Medium Blue7'), 
+                                  ('DarkPurple5', 'Dark Purple5'), ('SalmonPink6', 'Salmon Pink6'), ('MediumBlue7', 'Medium Blue7'),
                                   ('DarkBlue8', 'Dark Blue8'), ('Fushia9', 'Fushia9'), ('Green10', 'Green10'), ('Purple11', 'Purple11'),
                                  ], string="Color Def")
 
@@ -319,7 +345,7 @@ class AccountMove(models.Model):
                 'appointment_id': appointment.id,
             })
         return rec
-    
+
 # class InvoiceTransfer(models.Model):
 #     _inherit = "stock.picking"
 #
