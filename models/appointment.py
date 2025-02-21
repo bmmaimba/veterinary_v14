@@ -199,12 +199,13 @@ class CalendarEvent(models.Model):
             'default_move_type': 'out_invoice',
             'default_partner_id': self.pet_owner_id.id,
             'default_appointment_id': self.id,
-            'default_payment_reference': self.name,
+            #'default_payment_reference': self.name,
             'default_ref': self.name,
             'default_invoice_date': self.create_date,
             'default_invoice_date_due': self.create_date,
+            'default_journal_id': self.env['account.journal'].search([('type', '=', 'Cash')], limit=1).id,
             'default_invoice_payment_term_id': self.env['account.payment.term'].search([('name','=','Immediate Payment')]).id,
-            'default_auto_post': True,
+            # 'default_auto_post': True,
         }
         context.update(create=True)
         action = self.env.ref('account.action_move_out_invoice_type').read()[0]
@@ -335,16 +336,23 @@ class AccountMove(models.Model):
 
     appointment_id = fields.Many2one('calendar.event', string='Appointment')
     bill_id = fields.Many2one('sale.order', string='Bill')
+    def write(self, vals):
+        res = super(AccountMove, self).write(vals)
+        for record in self:
+            if record.state == 'posted' and not record.payment_reference:
+                record.payment_reference = record.name
+        return res
 
-    @api.model
-    def default_get(self, fields):
-        rec = super(AccountMove, self).default_get(fields)
-        appointment = self.env['calendar.event'].browse(self.env.context.get('active_id'))
-        if self.appointment_id not in rec:
-            rec.update({
-                'appointment_id': appointment.id,
-            })
-        return rec
+
+#    @api.model
+#    def default_get(self, fields):
+#        rec = super(AccountMove, self).default_get(fields)
+#        appointment = self.env['calendar.event'].browse(self.env.context.get('active_id'))
+#        if self.appointment_id not in rec:
+#            rec.update({
+#                'appointment_id': appointment.id,
+#            })
+#        return rec
 
 # class InvoiceTransfer(models.Model):
 #     _inherit = "stock.picking"
@@ -365,4 +373,3 @@ class AccountMove(models.Model):
 #                                                                  'immediate_transfer_line_ids':immediate_transfer_line_ids})
 #                     data_id.process()
 #         return res
-
