@@ -205,6 +205,7 @@ class CalendarEvent(models.Model):
             'default_invoice_date_due': self.create_date,
             'default_journal_id': self.env['account.journal'].search([('type', '=', 'Cash')], limit=1).id,
             'default_invoice_payment_term_id': self.env['account.payment.term'].search([('name','=','Immediate Payment')]).id,
+            'default_journal_id': self.env['account.journal'].search([('name','=','Customer Invoices')]).id,
             # 'default_auto_post': True,
         }
         context.update(create=True)
@@ -343,6 +344,64 @@ class AccountMove(models.Model):
                 record.payment_reference = record.name
         return res
 
+# class AccountPaymentRegister(models.TransientModel):
+#     _inherit = 'account.payment.register'
+
+#     @api.model
+#     def default_get(self, fields_list):
+#         # Call super to get default values
+#         defaults = super(AccountPaymentRegister, self).default_get(fields_list)
+
+#         # Find the cash journal
+#         cash_journal = self.env['account.journal'].search([
+#             ('type', '=', 'cash'),
+#             ('company_id', '=', self.env.company.id)
+#         ], limit=1)
+
+#         # If cash journal exists, set it as default
+#         if cash_journal and 'journal_id' in fields_list:
+#             defaults['journal_id'] = cash_journal.id
+
+#         return defaults
+
+class AccountPaymentRegister(models.TransientModel):
+    _inherit = 'account.payment.register'
+
+    # Add appointment field to the payment register form
+    appointment_id = fields.Many2one('calendar.event', string='Appointment')
+
+    @api.model
+    def default_get(self, fields_list):
+        # Call super to get default values
+        defaults = super(AccountPaymentRegister, self).default_get(fields_list)
+
+        # Find the cash journal
+        cash_journal = self.env['account.journal'].search([('type', '=', 'cash'), ('company_id', '=', self.env.company.id)], limit=1)
+
+        # If cash journal exists, set it as default
+        if cash_journal and 'journal_id' in fields_list:
+            defaults['journal_id'] = cash_journal.id
+
+        # Get active_ids (the invoices being paid)
+        active_ids = self._context.get('active_ids')
+        if active_ids:
+            # Get the first invoice to extract appointment info
+            invoice = self.env['account.move'].browse(active_ids[0])
+            # If invoice has appointment, use it
+            if hasattr(invoice, 'appointment_id') and invoice.appointment_id:
+                defaults['appointment_id'] = invoice.appointment_id.id
+
+        return defaults
+
+    def _create_payment_vals_from_wizard(self):
+        # Get payment values from original method
+        payment_vals = super(AccountPaymentRegister, self)._create_payment_vals_from_wizard()
+
+        # Add appointment_id to payment values
+        if self.appointment_id:
+            payment_vals['appointment_id'] = self.appointment_id.id
+
+        return payment_vals
 
 #    @api.model
 #    def default_get(self, fields):
