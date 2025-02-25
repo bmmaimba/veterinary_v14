@@ -55,7 +55,7 @@ class CalendarEvent(models.Model):
                                    ], string="Time", default='0700')
     patient_id = fields.Many2one("pets")
     bill_ids = fields.One2many('sale.order', 'appointment_id', string='Bills')
-    invoice_ids = fields.One2many('account.move', 'appointment_id', string='Invoice')
+    invoice_ids = fields.One2many('account.move', 'appointment_id', string='Invoice', domain=[('move_type', '=', 'out_invoice')])
     prescription_ids = fields.One2many('prescription', 'appointment_id', string='Prescription')
     sale_order_count = fields.Integer(string="Count Sale Order", default=0, compute='count_sale_order')
     invoice_count = fields.Float(string="Invoice Count", default=0.0, compute='count_invoice_total')

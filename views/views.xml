@@ -205,12 +205,12 @@
 
                     <page string="Invoice" name="invoice" groups="base.group_no_one">
                         <field name="invoice_ids">
-                            <tree string="Invoice" editable="top" create="true" delete="false">
-                                <field name="name"/>
-                                <field name="invoice_date_due"/>
-                                <field name="amount_total_signed"/>
-                                <field name="state"/>
-                                <field name="payment_state"/>
+                            <tree string="Invoice" editable="false" create="false" delete="false">
+                                <field name="name" readonly="1"/>
+                                <field name="invoice_date_due" readonly="1"/>
+                                <field name="amount_total_signed" readonly="1"/>
+                                <field name="state" readonly="1"/>
+                                <field name="payment_state" readonly="1"/>
                             </tree>
                         </field>
                     </page>
